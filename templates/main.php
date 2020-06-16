@@ -40,9 +40,20 @@
                                 <?= formatting_prices(htmlspecialchars($announce['price'])); ?>
                             </span>
                         </div>
-                        <div class="lot__timer timer">
-                            12:23
-                        </div>
+                        <?php require_once('helpers.php');
+
+                        $remaining_time = get_dt_range($announce['expiration_date']);
+                        if ($remaining_time[0] >= '1') {
+                            echo '<div class="lot__timer timer">';
+                            echo $remaining_time[0] . ':' . $remaining_time[1];
+                            echo '</div>';
+                        } else {
+                            echo '<div class="timer--finishing timer">';
+                            echo $remaining_time[0] . ':' . $remaining_time[1];
+                            echo '</div>';
+                        }
+                        ?>
+
                     </div>
                 </div>
             </li>

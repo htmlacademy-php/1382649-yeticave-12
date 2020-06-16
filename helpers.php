@@ -157,5 +157,16 @@ function formatting_prices($price)
     return $amount;
 }
 
+function get_dt_range($expiration_date)
+{
+    $dt_now_timestamp = strtotime("now");
+    $dt_expiration_timestamp = strtotime($expiration_date);
+    $remaining_time_timestamp = $dt_expiration_timestamp - $dt_now_timestamp;
+    $remaining_hours = floor($remaining_time_timestamp / 3600);
+    $remaining_minutes = floor(($remaining_time_timestamp % 3600) / 60);
+
+    return [$remaining_hours, $remaining_minutes];
+}
+
 ?>
 
