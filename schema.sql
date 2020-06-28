@@ -6,22 +6,22 @@ USE yeticave;
 
 CREATE TABLE category(
     id int NOT NULL AUTO_INCREMENT,
-    name char NOT NULL,
+    name char(50) NOT NULL,
     PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX idx_category ON category(name);
 
-CREATE TABLE users(
+CREATE TABLE user(
     id int NOT NULL AUTO_INCREMENT,
-    name char NOT NULL,
-    email char NOT NULL,
-    password char NOT NULL,
+    name char(80) NOT NULL,
+    email char(80) NOT NULL,
+    password char(50) NOT NULL,
     contacts varchar(200),
     avatar_img varchar(200),
     PRIMARY KEY (id)
 );
-CREATE UNIQUE INDEX idx_users_name ON users(name);
-CREATE UNIQUE INDEX idx_users_email ON users(email);
+CREATE UNIQUE INDEX idx_user_name ON user(name);
+CREATE UNIQUE INDEX idx_user_email ON user(email);
 
 CREATE TABLE lot(
     id int NOT NULL AUTO_INCREMENT,
@@ -29,15 +29,16 @@ CREATE TABLE lot(
     category_id int NOT NULL,
     description varchar(1000),
     init_price int NOT NULL,
-    step int NOT NULL,
+    step int,
     final_date DATE NOT NULL,
     PRIMARY KEY (id)
+
 );
 CREATE INDEX idx_lot_name ON lot(name);
 
-CREATE TABLE lots_img(
+CREATE TABLE lot_img(
     id int NOT NULL AUTO_INCREMENT,
-    image varchar(200) NOT NULL,
+    image_url varchar(200) NOT NULL,
     lot_id int NOT NULL,
     PRIMARY KEY (id)
 );
@@ -45,8 +46,9 @@ CREATE TABLE lots_img(
 CREATE TABLE bid(
     id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL,
+    lot_id int,
     bid_value int NOT NULL,
-    bid_time TIMESTAMP NOT NULL,
+    bid_time TIMESTAMP NOT NULL DEFAULT NOW(),
     PRIMARY KEY (id)
 );
 
