@@ -3,12 +3,24 @@
     <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и
         горнолыжное снаряжение.</p>
     <ul class="promo__list">
-        <!--заполните этот список из массива категорий-->
         <?php
-
         foreach ($categories as $item) {
+            $symbol = '';
+            if ($item == 'Доски и лыжи') {
+                $symbol = "boards";
+            } else if ($item == 'Крепления') {
+                $symbol = "attachment";
+            } else if ($item == 'Ботинки') {
+                $symbol = "boots";
+            } else if ($item == 'Одежда') {
+                $symbol = "clothing";
+            } else if ($item == 'Инструменты') {
+                $symbol = "tools";
+            } else if ($item == 'Разное') {
+                $symbol = "other";
+            }
             ?>
-            <li class="promo__item promo__item--boards">
+            <li class="promo__item promo__item--<?= $symbol ?>">
                 <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($item); ?></a>
             </li>
             <?php
