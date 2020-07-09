@@ -21,7 +21,7 @@ while ($category = mysqli_fetch_array($categories_result, MYSQLI_ASSOC)) {
 }
 
 /* SQL-запрос для получения списка новых лотов */
-$sql_lots = "SELECT lot.name as name, init_price as price, image_url as url, bid_value, category.name as category, final_date as expiration_date
+$sql_lots = "SELECT lot.id, lot.name as name, init_price as price, image_url as url, bid_value, category.name as category, final_date as expiration_date
 FROM lot
          LEFT JOIN lot_img ON lot.id = lot_img.lot_id
          LEFT JOIN bid ON bid.lot_id = lot.id

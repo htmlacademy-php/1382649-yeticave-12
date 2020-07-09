@@ -44,7 +44,8 @@
                 <div class="lot__info">
                     <span class="lot__category"><?= htmlspecialchars($announce['category']); ?></span>
                     <h3 class="lot__title"><a class="text-link"
-                                              href="pages/lot.html"><?= htmlspecialchars($announce['name']); ?></a></h3>
+                                              href="lot.php?id=<?= $announce['id'] ?>"><?= htmlspecialchars($announce['name']); ?></a>
+                    </h3>
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
@@ -52,8 +53,8 @@
                                 <?= formatting_prices(htmlspecialchars($announce['price'])); ?>
                             </span>
                         </div>
-                        <?php require_once('helpers.php');
 
+                        <?php require_once('helpers.php');
                         $remaining_time = get_dt_range($announce['expiration_date']);
                         if ($remaining_time[0] >= '1') {
                             echo '<div class="lot__timer timer">';
