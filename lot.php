@@ -9,17 +9,15 @@ if ($db_connection == false) {
 }
 
 //Check if query parameters exists
-if (!isset($_GET['id'])) {
-    header('Location: http://1382649-yeticave-12/404.php');
-    die();
-}
+return404();
 $id = intval($_GET['id']);
 
 $sql_id = "SELECT id FROM lot WHERE id=" . $id;
 $sql_id_query = mysqli_query($db_connection, $sql_id);
 
 if (mysqli_num_rows($sql_id_query) == 0) {
-    header('Location: http://1382649-yeticave-12/404.php');
+    header('Status: 404', TRUE, 404);
+    include __DIR__ . '/404.php';
     die();
 }
 

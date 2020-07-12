@@ -168,4 +168,13 @@ function get_dt_range($expiration_date)
     return [$remaining_hours, $remaining_minutes];
 }
 
+function return404()
+{
+    if (!isset($_GET['id'])) {
+        header('Status: 404', TRUE, 404);
+        include __DIR__ . '/404.php';
+        die();
+    }
+}
+
 ?>
