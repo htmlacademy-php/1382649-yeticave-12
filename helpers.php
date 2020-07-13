@@ -170,11 +170,9 @@ function get_dt_range($expiration_date)
 
 function return404()
 {
-    if (!isset($_GET['id'])) {
-        header('Status: 404', TRUE, 404);
-        include __DIR__ . '/404.php';
-        die();
-    }
+    header('Status: 404', TRUE, 404);
+    include __DIR__ . '/404.php';
+    die();
 }
 
 ?>

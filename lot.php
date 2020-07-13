@@ -9,16 +9,16 @@ if ($db_connection == false) {
 }
 
 //Check if query parameters exists
-return404();
+if (!isset($_GET['id'])) {
+    return404();
+}
 $id = intval($_GET['id']);
 
 $sql_id = "SELECT id FROM lot WHERE id=" . $id;
 $sql_id_query = mysqli_query($db_connection, $sql_id);
 
 if (mysqli_num_rows($sql_id_query) == 0) {
-    header('Status: 404', TRUE, 404);
-    include __DIR__ . '/404.php';
-    die();
+    return404();
 }
 
 // Extract categories from database
