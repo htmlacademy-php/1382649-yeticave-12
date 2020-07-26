@@ -168,6 +168,13 @@ function get_dt_range($expiration_date)
     return [$remaining_hours, $remaining_minutes];
 }
 
+function return404()
+{
+    header('Status: 404', TRUE, 404);
+    include __DIR__ . '/404.php';
+    die();
+}
+
 function getPostVal($name)
 {
     return $_POST[$name] == null ? "" : $_POST[$name];
@@ -251,7 +258,7 @@ function validateDate()
     $set_date = convertDataToTimestamp();
     $current_date = date('Y-m-d');
     $current_data_timestamp = strtotime($current_date);
-    if ($_POST['lot-date'] == '') {
+    if (empty($_POST['lot-date'])) {
         return "Введите дату";
     }
     if ($set_date <= $current_data_timestamp) {
@@ -262,4 +269,3 @@ function validateDate()
 }
 
 ?>
-
