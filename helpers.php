@@ -233,7 +233,8 @@ function validateImage($name)
 
 function validatePrice()
 {
-    if (empty($_POST['lot-rate'])) {
+
+    if (intval($_POST['lot-rate']) <= 0) {
         return "Введите начальную цену";
     }
     return null;
@@ -241,7 +242,7 @@ function validatePrice()
 
 function validateStep()
 {
-    if (empty($_POST['lot-step'])) {
+    if (intval($_POST['lot-step']) <= 0) {
         return "Введите шаг ставки";
     }
     return null;
