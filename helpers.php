@@ -175,4 +175,98 @@ function return404()
     die();
 }
 
+function getPostVal($name)
+{
+    return $_POST[$name] == null ? "" : $_POST[$name];
+}
+
+function validateText($name, $error_description, $max_val_of_char)
+{
+    if (empty($_POST[$name])) {
+        return $error_description;
+    }
+    if ($result = isCorrectLength($name, 1, $max_val_of_char)) {
+        return $result;
+    }
+    return null;
+}
+
+function isCorrectLength($name, $min, $max)
+{
+    $len = strlen($_POST[$name]);
+
+    if ($len < $min or $len > $max) {
+        return "Значение должно быть до $max символов";
+    }
+    return null;
+}
+
+function validateIssetCategory($categories, $category)
+{
+    if (!in_array($category, $categories)) {
+        return "Выберите категорию";
+    }
+    return null;
+}
+
+function validateImage($name)
+{
+    if ($_FILES[$name]['size'] == 0) {
+        return "Загрузите картинку";
+    }
+    if (isset($_FILES[$name])) {
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $file_name = $_FILES[$name]['tmp_name'];
+        $file_size = $_FILES[$name]['size'];
+        $file_type = finfo_file($finfo, $file_name);
+
+        if ($file_type !== 'image/jpg' && $file_type !== 'image/jpeg') {
+            return "Загрузите картинку в формате JPG/JPEG";
+        }
+        if ($file_size > 200000) {
+            return "Максимальный размер файла: 200Кб";
+        }
+    }
+
+    return null;
+}
+
+function validatePrice()
+{
+
+    if (intval($_POST['lot-rate']) <= 0) {
+        return "Введите начальную цену";
+    }
+    return null;
+}
+
+function validateStep()
+{
+    if (intval($_POST['lot-step']) <= 0) {
+        return "Введите шаг ставки";
+    }
+    return null;
+}
+
+function convertDataToTimestamp()
+{
+    $post_date = $_POST['lot-date'];
+    return $timestamp_post_date = strtotime($post_date);
+}
+
+function validateDate()
+{
+    $set_date = convertDataToTimestamp();
+    $current_date = date('Y-m-d');
+    $current_data_timestamp = strtotime($current_date);
+    if (empty($_POST['lot-date'])) {
+        return "Введите дату";
+    }
+    if ($set_date <= $current_data_timestamp) {
+        return "Дата не может быть из прошлого или сегодняшней";
+    }
+
+    return null;
+}
+
 ?>
