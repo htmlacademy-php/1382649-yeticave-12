@@ -233,7 +233,6 @@ function validateImage($name)
 
 function validatePrice()
 {
-
     if (intval($_POST['lot-rate']) <= 0) {
         return "Введите начальную цену";
     }
@@ -268,5 +267,54 @@ function validateDate()
 
     return null;
 }
+
+function validateEmail($email, $db_connection)
+{
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return 'Вы ввели неправильный адрес электронной почты';
+    }
+
+    $sql_compare_email = "SELECT email FROM user WHERE email = '" . $email . "';";
+    $sql_compare_email_query = mysqli_query($db_connection, $sql_compare_email);
+    $sql_email_comparation_result = mysqli_fetch_array($sql_compare_email_query, MYSQLI_NUM);
+    if ($sql_email_comparation_result != NULL) {
+        return 'Такой адрес электронной почты уже существует';
+    }
+
+    return null;
+}
+
+function validatePassword($password)
+{
+    if (strlen($password) == 0) {
+        return "Введите пароль";
+    } else if (strlen($password) < 8) {
+        return "Пароль должен иметь минимум 8 символов";
+    }
+
+}
+
+function validateName($name, $max_nr_of_simbols)
+{
+    if (empty($name)) {
+        return "Введите имя";
+    }
+    if (strlen($name) > $max_nr_of_simbols) {
+        return "Значение должно быть до $max_nr_of_simbols символов";
+    }
+    return null;
+}
+
+function validateContacts($contacts, $max_nr_of_symbols)
+{
+    if (empty($contacts)) {
+        return "Напишите как с вами связаться";
+    }
+    if (strlen($contacts) > $max_nr_of_symbols) {
+        return "Значение должно быть до $max_nr_of_symbols символов";
+    }
+    return null;
+}
+
 
 ?>

@@ -20,7 +20,7 @@ CREATE TABLE user(
     avatar_img varchar(200),
     PRIMARY KEY (id)
 );
-CREATE UNIQUE INDEX idx_user_name ON user(name);
+CREATE INDEX idx_user_name ON user(name);
 CREATE UNIQUE INDEX idx_user_email ON user(email);
 
 CREATE TABLE lot(
