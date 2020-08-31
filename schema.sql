@@ -52,6 +52,7 @@ CREATE TABLE bid(
     PRIMARY KEY (id)
 );
 
+ALTER TABLE user MODIFY password CHAR(60);
 
 
 
