@@ -21,7 +21,8 @@
             }
             ?>
             <li class="promo__item promo__item--<?= $symbol ?>">
-                <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($item); ?></a>
+                <a class="promo__link"
+                   href="all-lots.php?category=<?= htmlspecialchars($item); ?>"><?= htmlspecialchars($item); ?></a>
             </li>
             <?php
         }
@@ -66,7 +67,6 @@
                             echo '</div>';
                         }
                         ?>
-
                     </div>
                 </div>
             </li>

@@ -1,5 +1,6 @@
 <?php
 require_once('helpers.php');
+require_once('init.php');
 
 //Connection with database
 $db_connection = mysqli_connect('localhost', 'root', 'root', "yeticave");
@@ -43,24 +44,21 @@ LEFT JOIN category ON category.id = lot.category_id WHERE lot.id = " . $id;
 $sql_lot_query = mysqli_query($db_connection, $sql_lot);
 $lot = mysqli_fetch_array($sql_lot_query, MYSQLI_ASSOC);
 
-// Extract necesary info about bids from database
-$sql_bids = "SELECT user.name as username, bid.bid_value, bid.bid_time FROM bid LEFT JOIN  user ON user.id = bid.user_id WHERE bid.lot_id = " . $id;
+$sql_bids = "SELECT user.name as username, bid.bid_value, DATE_FORMAT(bid.bid_time, \"%d.%m.%y\") AS bid_data,
+       DATE_FORMAT(bid.bid_time, \"%m:%i\") AS bid_hour FROM bid LEFT JOIN  user ON user.id = bid.user_id WHERE bid.lot_id = " . $id;
 
 $sql_bids_query = mysqli_query($db_connection, $sql_bids);
 $bids = mysqli_fetch_all($sql_bids_query, MYSQLI_ASSOC);
 
-//Count of bids for the lot
 $sql_count_of_bids = "SELECT COUNT(*) as count FROM bid WHERE lot_id = " . $id;
 $sql_count_of_bids_query = mysqli_query($db_connection, $sql_count_of_bids);
 $bids_count = mysqli_fetch_assoc($sql_count_of_bids_query);
 $count = $bids_count['count'];
 
-
-// Display template lot_layout
 $lot_layout = include_template('lot_layout.php', ['categories' => $categories, 'lot_name' => $lot['lot_name'],
     'image_url' => $lot['lot_image_url'], 'category_id' => $lot['lot_category'], 'description' => $lot['lot_description'],
     'init_price' => $lot['lot_init_price'], 'bid_value' => $lot['lot_bid_value'], 'expiration_date' => $lot['lot_final_date'],
-    'bids' => $bids, 'bids_count' => $count]);
+    'bids' => $bids, 'bids_count' => $count, 'user_name'=>htmlspecialchars($_SESSION['user']['name'])]);
 echo $lot_layout;
 
 

@@ -1,5 +1,13 @@
 <?php
 require_once("helpers.php");
+require_once("init.php");
+if ($_SESSION['user']['name'] == null) {
+    header('HTTP/1.0 403 Forbidden');
+    echo "<h1>Error 403</h1>";
+    echo "Для ввода нового лота вы должны авторизоваться!";
+    echo "<br><a href = 'sign-up.php'>Зарегистрируйтесь</a> или <a href = 'login.php'>войдите в свой аккаунт</a>";
+    exit();
+}
 
 $db_connection = mysqli_connect('localhost', 'root', 'root', 'yeticave');
 mysqli_set_charset($db_connection, 'utf-8');
@@ -98,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-$layout = include_template('add-lot.php', ['title' => 'Добавление лота', 'username' => 'Nicoleta',
+$layout = include_template('add-lot.php', ['title' => 'Добавление лота', 'username' => htmlspecialchars($_SESSION['user']['name']),
     'categories' => $categories, 'errors' => $errors, 'warning_about_errors' => $warning_about_errors]);
 print $layout;
 
