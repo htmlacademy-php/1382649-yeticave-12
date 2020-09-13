@@ -1,6 +1,6 @@
 <?php
 require_once('helpers.php');
-
+require_once('init.php');
 /* Подключение к БД */
 $db_connection = mysqli_connect('localhost', 'root', 'root', "yeticave");
 mysqli_set_charset($db_connection, "utf8");
@@ -35,9 +35,9 @@ if (!$lots_result) {
     print("Ошибка MySQL: " . $error);
 }
 $lots = mysqli_fetch_all($lots_result, MYSQLI_ASSOC);
-
-$user_name = 'Nicoleta';
+//$all_lots = get_all_lots($db_connection);
 $main = include_template('main.php', ['categories' => $categories, 'announces' => $lots]);
-$content = include_template('layout.php', ['content' => $main, 'user_name' => $user_name, 'title' => 'Главная', 'categories' => $categories]);
+$content = include_template('layout.php', ['content' => $main, 'user_name' => htmlspecialchars($_SESSION['user']['name']), 'title' => 'Главная',
+    'categories' => $categories]);
 print ($content);
 ?>

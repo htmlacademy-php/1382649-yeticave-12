@@ -168,6 +168,20 @@ function get_dt_range($expiration_date)
     return [$remaining_hours, $remaining_minutes];
 }
 
+function remaining_time($expiration_date)
+{
+    $remaining_time = get_dt_range($expiration_date);
+    if ($remaining_time[0] >= '1') {
+        echo '<div class="lot__timer timer">';
+        echo $remaining_time[0] . ':' . $remaining_time[1];
+        echo '</div>';
+    } else {
+        echo '<div class="timer--finishing timer">';
+        echo $remaining_time[0] . ':' . $remaining_time[1];
+        echo '</div>';
+    }
+}
+
 function return404()
 {
     header('Status: 404', TRUE, 404);
@@ -270,11 +284,15 @@ function validateDate()
 
 function validateEmail($email, $db_connection)
 {
+    if (empty($email)) {
+        return "Введите адрес электронной почты";
+    }
+
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return 'Вы ввели неправильный адрес электронной почты';
     }
 
-    $sql_compare_email = "SELECT email FROM user WHERE email = '" . $email . "';";
+    $sql_compare_email = "SELECT email FROM user WHERE email ='" . $email . "';";
     $sql_compare_email_query = mysqli_query($db_connection, $sql_compare_email);
     $sql_email_comparation_result = mysqli_fetch_array($sql_compare_email_query, MYSQLI_NUM);
     if ($sql_email_comparation_result != NULL) {
@@ -316,5 +334,17 @@ function validateContacts($contacts, $max_nr_of_symbols)
     return null;
 }
 
+function verifyEmail($email, $db_connection)
+{
+    if (empty($email)) {
+        return "Введите адрес электронной почты";
+    }
+    return null;
+}
 
+function logout()
+{
+    session_start();
+    $_SESSION = [];
+}
 ?>

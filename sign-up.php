@@ -54,7 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header('Location:/index.php');
         die();
     }
-
 }
 
 $layout = include_template('sign-up_layout.php', ['title' => 'Регистрация пользователя', 'categories' => $categories, 'errors' => $errors, 'warning_about_errors' => $warning_about_errors]);

@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Error! Page not found!</title>
+    <title>Вход</title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
@@ -24,36 +24,15 @@
             <nav class="user-menu">
                 <ul class="user-menu__list">
                     <li class="user-menu__item">
-                        <a href="sign-up.html">Регистрация</a>
+                        <a href="sign-up.php">Регистрация</a>
                     </li>
                     <li class="user-menu__item">
-                        <a href="login.html">Вход</a>
+                        <a href="login.php">Вход</a>
                     </li>
                 </ul>
             </nav>
         </div>
     </header>
-
-    <?php
-    // Connection with database
-    $db_connection = mysqli_connect('localhost', 'root', 'root', "yeticave");
-    mysqli_set_charset($db_connection, "utf8");
-    if ($db_connection == false) {
-        print("Ошибка подключения: " . mysqli_connect_error());
-    }
-
-    // Extract list of categories from database
-    $sql_categories = "SELECT name FROM category;";
-    $categories_result = mysqli_query($db_connection, $sql_categories);
-    if (!$categories_result) {
-        $error = mysqli_error($db_connection);
-        print("Ошибка MySQL: " . $error);
-    }
-    $categories = [];
-    while ($category = mysqli_fetch_array($categories_result, MYSQLI_ASSOC)) {
-        array_push($categories, $category['name']);
-    }
-    ?>
 
     <main>
         <nav class="nav">
@@ -65,15 +44,26 @@
                 <?php } ?>
             </ul>
         </nav>
-        <section class="lot-item container">
-            <h2>404 Страница не найдена</h2>
-            <p>Данной страницы не существует на сайте.</p>
-        </section>
+        <form class="form container" action="login.php" method="post"> <!-- form--invalid -->
+            <h2>Вход</h2>
+            <div class="form__item <?= isset($errors['email']) ? "form__item--invalid" : ""; ?>">
+                <label for="email">E-mail <sup>*</sup></label>
+                <input id="email" type="text" name="email" placeholder="Введите e-mail"
+                       value="<?= htmlspecialchars(getPostVal($_POST['email'])) ?>">
+                <span class="form__error"><?= $errors['email'] ?></span>
+            </div>
+            <div class="form__item <?= isset($errors['password']) ? "form__item--invalid" : ""; ?> ">
+                <label for="password">Пароль <sup>*</sup></label>
+                <input id="password" type="password" name="password" placeholder="Введите пароль"
+                       value="<?= htmlspecialchars(getPostVal($_POST['password'])) ?>">
+                <span class="form__error"><?= $errors['password'] ?></span>
+            </div>
+            <button type="submit" class="button">Войти</button>
+        </form>
     </main>
 </div>
 
-<?php require_once 'templates/footer.php'; ?>
+<?php require_once 'footer.php'; ?>
 
 </body>
 </html>
-
