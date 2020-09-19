@@ -35,7 +35,6 @@ if (!$lots_result) {
     print("Ошибка MySQL: " . $error);
 }
 $lots = mysqli_fetch_all($lots_result, MYSQLI_ASSOC);
-//$all_lots = get_all_lots($db_connection);
 $main = include_template('main.php', ['categories' => $categories, 'announces' => $lots]);
 $content = include_template('layout.php', ['content' => $main, 'user_name' => htmlspecialchars($_SESSION['user']['name']), 'title' => 'Главная',
     'categories' => $categories]);

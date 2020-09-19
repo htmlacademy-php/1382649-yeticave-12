@@ -54,6 +54,5 @@ CREATE TABLE bid(
 
 ALTER TABLE user MODIFY password CHAR(60);
 
-
-
+CREATE FULLTEXT INDEX lots_search ON lot(name,description);
 

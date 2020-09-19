@@ -1,9 +1,9 @@
+<?php require_once('helpers.php'); ?>
 <!DOCTYPE html>
-<?php require_once "init.php"; ?>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Все лоты</title>
+    <title>Результаты поиска</title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
@@ -18,7 +18,7 @@
                 <img src="../img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
             </a>
             <form class="main-header__search" method="get" action="search.php" autocomplete="off">
-                <input type="search" name="search" placeholder="Поиск лота">
+                <input type="search" name="search" placeholder="Поиск лота" value="<?= $_GET['search'] ?>">
                 <input class="main-header__search-btn" type="submit" name="find" value="Найти">
             </form>
             <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
@@ -47,43 +47,53 @@
     <main>
         <nav class="nav">
             <ul class="nav__list container">
-                <?php foreach ($categories as $get_category) { ?>
+                <?php foreach ($categories as $category) { ?>
                     <li class="nav__item">
-                        <a href="all-lots.php?category=<?= htmlspecialchars($get_category) ?>"><?= htmlspecialchars($get_category) ?></a>
+                        <a href="all-lots.php?category=<?= $category ?>"><?= $category ?></a>
                     </li>
                 <?php } ?>
             </ul>
         </nav>
         <div class="container">
             <section class="lots">
-                <h2>Все лоты в категории <span>"<?= htmlspecialchars($_GET['category']) ?>"</span></h2>
+                <?php if (empty($search_result)) {
+                    echo '<h2>' . $search_error . '</h2>';
+                } else { ?>
+                <h2>Результаты поиска по запросу «<span><?= $_GET['search'] ?></span>»</h2>
                 <ul class="lots__list">
-                    <? foreach ($all_lots as $lot) { ?>
-
+                    <?php foreach ($search_result as $lot) { ?>
                         <li class="lots__item lot">
                             <div class="lot__image">
-                                <img src="<?= htmlspecialchars($lot['image_url']) ?>" width="350" height="260"
-                                     alt="<?= htmlspecialchars($lot['lot_name']) ?>">
+                                <img src="/<?= $lot['lot_image_url'] ?>" width="350" height="260"
+                                     alt="<?= $lot['lot_name'] ?>">
                             </div>
                             <div class="lot__info">
-                                <span class="lot__category"><?= htmlspecialchars($lot['category_name']) ?></span>
-                                <h3 class="lot__title">
-                                    <a class="text-link"
-                                       href="lot.php?id=<?= htmlspecialchars($lot['id']) ?>"><?= htmlspecialchars($lot['name']) ?></a>
+                                <span class="lot__category"><?= $lot['lot_category'] ?></span>
+                                <h3 class="lot__title"><a class="text-link"
+                                                          href="lot.php?id=<?= $lot['id'] ?>"><?= $lot['lot_name'] ?></a>
                                 </h3>
                                 <div class="lot__state">
                                     <div class="lot__rate">
                                         <span class="lot__amount">Стартовая цена</span>
-                                        <span class="lot__cost"><?= htmlspecialchars($lot['init_price']) ?><b
-                                                class="rub">р</b></span>
+                                        <span class="lot__cost"><?= $lot['lot_init_price'] ?><b class="rub">р</b></span>
                                     </div>
-                                    <?php
-                                    remaining_time(htmlspecialchars($lot['final_date']));
-                                    ?>
+                                    <div>
+                                        <?php $remaining_time = get_dt_range($lot['lot_final_date']);
+                                        if ($remaining_time[0] >= '1') {
+                                            echo '<div class ="lot__timer timer">';
+                                            echo $remaining_time[0] . ':' . $remaining_time[1];
+                                            echo '</div>';
+                                        } else {
+                                            echo '<div class="timer--finishing timer">';
+                                            echo $remaining_time[0] . ':' . $remaining_time[1];
+                                            echo '</div>';
+                                        } ?>
+                                    </div>
                                 </div>
                             </div>
                         </li>
-                    <?php } ?>
+                    <?php }
+                    } ?>
                 </ul>
             </section>
             <ul class="pagination-list">
