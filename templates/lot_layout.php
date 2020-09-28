@@ -25,7 +25,7 @@
                 <?php
                 if ($_SESSION['user']['name'] != null) { ?>
                     <div class="user-menu__logged">
-                        <p><?= $user_name ?></p>
+                        <p><?= htmlspecialchars($user_name) ?></p>
                         <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
                         <a class="user-menu__logout" href="logout.php">Выход</a>
                     </div>
@@ -55,7 +55,7 @@
             </ul>
         </nav>
         <section class="lot-item container">
-            <h2><?= $lot_name ?></h2>
+            <h2><?= htmlspecialchars($lot_name) ?></h2>
             <div class="lot-item__content">
                 <div class="lot-item__left">
                     <div class="lot-item__image">
@@ -78,21 +78,22 @@
                             <div class="lot-item__rate">
                                 <span class="lot-item__amount">Текущая цена</span>
                                 <span
-                                    class="lot-item__cost"> <?= formatting_prices(htmlspecialchars($init_price)); ?></span>
+                                    class="lot-item__cost"> <?= formatting_prices(htmlspecialchars($last_bid_value)); ?></span>
                             </div>
 
                             <div class="lot-item__min-cost">
-                                Мин. ставка <span><?= htmlspecialchars($bid_value . ' р') ?></span>
+                                Мин. ставка <span><?= htmlspecialchars($min_bid_value . ' р') ?></span>
                             </div>
                         </div>
                         <?php if ($_SESSION['user']['name'] != null) { ?>
-                            <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post"
+                            <form class="lot-item__form" action="lot.php?id=<?= $_GET['id'] ?>" method="post"
                                   autocomplete="off">
-                                <p class="lot-item__form-item form__item form__item--invalid">
+                                <p class="lot-item__form-item <?= isset($error) ? 'form__item form__item--invalid' : '' ?> ">
+                                    <!--form__item form__item--invalid -->
                                     <label for="cost">Ваша ставка</label>
                                     <input id="cost" type="text" name="cost"
-                                           placeholder="<?= htmlspecialchars($bid_value) ?>">
-                                    <span class="form__error">Введите наименование лота</span>
+                                           placeholder="<?= htmlspecialchars($min_bid_value) ?>">
+                                    <span class="form__error"> <?= $error ?></span>
                                 </p>
                                 <button type="submit" class="button">Сделать ставку</button>
                             </form>

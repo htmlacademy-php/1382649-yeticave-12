@@ -36,7 +36,7 @@ if (!$lots_result) {
 }
 $lots = mysqli_fetch_all($lots_result, MYSQLI_ASSOC);
 $main = include_template('main.php', ['categories' => $categories, 'announces' => $lots]);
-$content = include_template('layout.php', ['content' => $main, 'user_name' => htmlspecialchars($_SESSION['user']['name']), 'title' => 'Главная',
+$content = include_template('layout.php', ['content' => $main, 'user_name' => $_SESSION['user']['name'], 'title' => 'Главная',
     'categories' => $categories]);
 print ($content);
 ?>

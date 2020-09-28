@@ -25,7 +25,7 @@
             <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
             <nav class="user-menu">
                 <div class="user-menu__logged">
-                    <p><?= $username ?></p>
+                    <p><?= htmlspecialchars($username) ?></p>
                     <a class="user-menu__bets" href="my-bets.html">Мои ставки</a>
                     <a class="user-menu__logout" href="logout.php">Выход</a>
                 </div>

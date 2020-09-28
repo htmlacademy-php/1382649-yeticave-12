@@ -347,4 +347,12 @@ function logout()
     session_start();
     $_SESSION = [];
 }
+
+function addOrUpdateUrlParam($name, $value)
+{
+    $params = $_GET;
+    $params[$name] = $value;
+    return $_SERVER['SCRIPT_NAME'] . '?' . http_build_query($params);
+}
+
 ?>

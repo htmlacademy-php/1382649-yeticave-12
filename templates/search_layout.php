@@ -16,9 +16,11 @@
             <h1 class="visually-hidden">YetiCave</h1>
             <a class="main-header__logo" href="index.php">
                 <img src="../img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
+
             </a>
             <form class="main-header__search" method="get" action="search.php" autocomplete="off">
-                <input type="search" name="search" placeholder="Поиск лота" value="<?= $_GET['search'] ?>">
+                <input type="search" name="search" placeholder="Поиск лота"
+                       value="<?= htmlspecialchars($_GET['search']) ?>">
                 <input class="main-header__search-btn" type="submit" name="find" value="Найти">
             </form>
             <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
@@ -26,7 +28,7 @@
                 <?php
                 if ($_SESSION['user']['name'] != null) { ?>
                     <div class="user-menu__logged">
-                        <p><?= $user_name ?></p>
+                        <p><?= htmlspecialchars($user_name) ?></p>
                         <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
                         <a class="user-menu__logout" href="logout.php">Выход</a>
                     </div>
@@ -43,13 +45,12 @@
             </nav>
         </div>
     </header>
-
     <main>
         <nav class="nav">
             <ul class="nav__list container">
                 <?php foreach ($categories as $category) { ?>
                     <li class="nav__item">
-                        <a href="all-lots.php?category=<?= $category ?>"><?= $category ?></a>
+                        <a href="all-lots.php?category=<?= htmlspecialchars($category) ?>"><?= htmlspecialchars($category) ?></a>
                     </li>
                 <?php } ?>
             </ul>
@@ -59,23 +60,24 @@
                 <?php if (empty($search_result)) {
                     echo '<h2>' . $search_error . '</h2>';
                 } else { ?>
-                <h2>Результаты поиска по запросу «<span><?= $_GET['search'] ?></span>»</h2>
+                <h2>Результаты поиска по запросу «<span><?= htmlspecialchars($_GET['search']) ?></span>»</h2>
                 <ul class="lots__list">
                     <?php foreach ($search_result as $lot) { ?>
                         <li class="lots__item lot">
                             <div class="lot__image">
-                                <img src="/<?= $lot['lot_image_url'] ?>" width="350" height="260"
-                                     alt="<?= $lot['lot_name'] ?>">
+                                <img src="/<?= htmlspecialchars($lot['lot_image_url']) ?>" width="350" height="260"
+                                     alt="<?= htmlspecialchars($lot['lot_name']) ?>">
                             </div>
                             <div class="lot__info">
-                                <span class="lot__category"><?= $lot['lot_category'] ?></span>
+                                <span class="lot__category"><?= htmlspecialchars($lot['lot_category']) ?></span>
                                 <h3 class="lot__title"><a class="text-link"
-                                                          href="lot.php?id=<?= $lot['id'] ?>"><?= $lot['lot_name'] ?></a>
+                                                          href="lot.php?id=<?= htmlspecialchars($lot['id']) ?>"><?= htmlspecialchars($lot['lot_name']) ?></a>
                                 </h3>
                                 <div class="lot__state">
                                     <div class="lot__rate">
                                         <span class="lot__amount">Стартовая цена</span>
-                                        <span class="lot__cost"><?= $lot['lot_init_price'] ?><b class="rub">р</b></span>
+                                        <span class="lot__cost"><?= htmlspecialchars($lot['lot_init_price']) ?><b
+                                                class="rub">р</b></span>
                                     </div>
                                     <div>
                                         <?php $remaining_time = get_dt_range($lot['lot_final_date']);
@@ -96,17 +98,34 @@
                     } ?>
                 </ul>
             </section>
-            <ul class="pagination-list">
-                <li class="pagination-item pagination-item-prev"><a>Назад</a></li>
-                <li class="pagination-item pagination-item-active"><a>1</a></li>
-                <li class="pagination-item"><a href="#">2</a></li>
-                <li class="pagination-item"><a href="#">3</a></li>
-                <li class="pagination-item"><a href="#">4</a></li>
-                <li class="pagination-item pagination-item-next"><a href="#">Вперед</a></li>
-            </ul>
+
+            <?php if ($search_result != null) {
+                if ($number_of_pages > 1) { ?>
+                    <ul class="pagination-list">
+                        <li class="pagination-item pagination-item-prev">
+                            <?php if ($_GET['page'] > 1) { ?>
+                                <a href="<?= htmlspecialchars(addOrUpdateUrlParam('page', $curent_page - 1)); ?>">Назад</a>
+                            <?php } ?>
+                        </li>
+
+                        <?php foreach ($pages as $page) { ?>
+                            <?php $current_url = $_SERVER['REQUEST_URI']; ?>
+                            <li class="pagination-item <?php if ($page == $curent_page) echo 'pagination-item-active' ?>">
+                                <a href="<?= htmlspecialchars(addOrUpdateUrlParam('page', $page)) ?>"><?= $page ?></a>
+                            </li>
+                        <?php } ?>
+
+                        <li class="pagination-item pagination-item-next">
+                            <?php if ($_GET['page'] < $number_of_pages) { ?>
+                            <a href="<?= htmlspecialchars(addOrUpdateUrlParam('page', $curent_page + 1)) ?>">Вперед</a>
+                        </li>
+                    <?php } ?>
+                    </ul>
+                    <?php
+                }
+            } ?>
         </div>
     </main>
-
 </div>
 
 <?php require_once 'footer.php'; ?>
