@@ -17,7 +17,7 @@
             <a class="main-header__logo" href="index.php">
                 <img src="../img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
             </a>
-            <form class="main-header__search" method="get" action="" autocomplete="off">
+            <form class="main-header__search" method="get" action="search.php" autocomplete="off">
                 <input type="search" name="search" placeholder="Поиск лота">
                 <input class="main-header__search-btn" type="submit" name="find" value="Найти">
             </form>
@@ -26,7 +26,7 @@
                 <?php
                 if ($_SESSION['user']['name'] != null) { ?>
                     <div class="user-menu__logged">
-                        <p><?= $user_name ?></p>
+                        <p><?= htmlspecialchars($user_name) ?></p>
                         <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
                         <a class="user-menu__logout" href="logout.php">Выход</a>
                     </div>
@@ -86,14 +86,24 @@
                     <?php } ?>
                 </ul>
             </section>
-            <ul class="pagination-list">
-                <li class="pagination-item pagination-item-prev"><a>Назад</a></li>
-                <li class="pagination-item pagination-item-active"><a>1</a></li>
-                <li class="pagination-item"><a href="#">2</a></li>
-                <li class="pagination-item"><a href="#">3</a></li>
-                <li class="pagination-item"><a href="#">4</a></li>
-                <li class="pagination-item pagination-item-next"><a href="#">Вперед</a></li>
-            </ul>
+            <?php if ($number_of_pages > 1) { ?>
+                <ul class="pagination-list">
+                    <li class="pagination-item pagination-item-prev">
+                        <?php if ($_GET['page'] > 1) { ?>
+                        <a href="<?= htmlspecialchars(addOrUpdateUrlParam('page', $current_page - 1)); ?>">
+                            Назад</a></li>
+                    <?php } ?>
+                    <?php foreach ($array_of_pages as $page) { ?>
+                        <li class="pagination-item <?= $current_page == $page ? 'pagination-item-active' : '' ?> ">
+                            <a href="<?= addOrUpdateUrlParam('page', $page) ?>"><?= $page ?></a></li>
+                    <?php } ?>
+                    <li class="pagination-item pagination-item-next">
+                        <?php if ($_GET['page'] < $number_of_pages) { ?>
+                        <a href="<?= htmlspecialchars(addOrUpdateUrlParam('page', $current_page + 1)) ?>">Вперед</a>
+                    </li>
+                <?php } ?>
+                </ul>
+            <?php } ?>
         </div>
     </main>
 

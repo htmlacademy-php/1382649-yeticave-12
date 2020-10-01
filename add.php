@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-$layout = include_template('add-lot.php', ['title' => 'Добавление лота', 'username' => htmlspecialchars($_SESSION['user']['name']),
+$layout = include_template('add-lot.php', ['title' => 'Добавление лота', 'username' => $_SESSION['user']['name'],
     'categories' => $categories, 'errors' => $errors, 'warning_about_errors' => $warning_about_errors]);
 print $layout;
 
