@@ -14,8 +14,8 @@ while ($category = mysqli_fetch_array($sql_categories, MYSQLI_ASSOC)) {
     array_push($categories, $category['name']);
 }
 
-if (isset($_GET['search'])) {
-    $search = $_GET['search'] != null ? trim($_GET['search']) : '';
+if (!empty($_GET['search'])) {
+    $search = trim($_GET['search']);
     $search_array = explode(' ', $search);
     $search_for_sql = '';
     $search_error = "Ничего не найдено по вашему запросу";
