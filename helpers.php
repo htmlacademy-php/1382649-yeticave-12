@@ -355,4 +355,74 @@ function addOrUpdateUrlParam($name, $value)
     return $_SERVER['SCRIPT_NAME'] . '?' . http_build_query($params);
 }
 
+function page_redirect($location)
+{
+    header("Location:" . $location);
+    die;
+}
+
+function remaining_time_bet_array_values($line_background_style, $column_background_style, $text, $addres)
+{
+    $values = ['line_background_style' => $line_background_style,
+        'column_background_style' => $column_background_style,
+        'text' => $text, 'addres' => $addres];
+    return $values;
+}
+
+function remaining_time_bet($expiration_time, $user_id, $user_lot, $db_connection)
+{
+    $winner = winner_user($user_lot, $user_id, $db_connection, $expiration_time);
+    $time = get_dt_range($expiration_time);
+    if ($winner == 1) {
+        return remaining_time_bet_array_values(
+            'rates__item rates__item--win',
+            'timer timer--win',
+            'Ставка выиграла', 'Телефон +7 900 667-84-48, Скайп: Vlas92. Звонить с 14 до 20');
+    } else if ($time[0] > 24) {
+        return remaining_time_bet_array_values(
+            'rates__item',
+            'timer',
+            $time[0] . ':' . $time[1], '');
+    } else if ($time[0] < 0) {
+        return remaining_time_bet_array_values(
+            'rates__item rates__item--end',
+            'timer timer--end',
+            'Торги окончены', '');
+    } else if ($time[0] <= 24) {
+        return remaining_time_bet_array_values(
+            'rates__item',
+            'timer timer--finishing',
+            $time[0] . ':' . $time[1], '');
+    }
+}
+
+function winner_user($user_bet_lot_id, $user_bet_user_id, $db_connection, $expiration_time)
+{
+    $winner = 0;
+    if (strtotime($expiration_time) < strtotime('now')) {
+        $sql_last_bet_id = "SELECT user_id, id as max_id FROM bid WHERE lot_id = " . $user_bet_lot_id . " ORDER BY id DESC LIMIT 1";
+        $sql_last_bet_id_query = mysqli_query($db_connection, $sql_last_bet_id);
+        $last_bet_id = mysqli_fetch_array($sql_last_bet_id_query, MYSQLI_ASSOC);
+        if ($last_bet_id['user_id'] == $user_bet_user_id) {
+            $winner = 1;
+        }
+    }
+    return $winner;
+}
+
+function bid_time($bid_time)
+{
+    $bid_time_strtotime = strtotime('now') - strtotime($bid_time);
+    $bid_time_minutes = ceil($bid_time_strtotime / 60);
+    $bid_time_hours = floor($bid_time_strtotime / 3600);
+    if ($bid_time_hours == 0 && ($bid_time_minutes >= 0 || ($bid_time_minutes < 60))) {
+        return $bid_time_minutes . ' ' . get_noun_plural_form($bid_time_minutes, 'минута назад', 'минуты назад', 'минут назад');
+    } else if ($bid_time_hours == 1) {
+        return 'час назад';
+    } else if ($bid_time_hours > 1 && $bid_time_hours < 12) {
+        return $bid_time_hours . ' ' . get_noun_plural_form($bid_time_hours, 'час назад', 'часа назад', 'часов назад');
+    } else {
+        return date_format(date_create($bid_time), 'Y-m-d в H:i');
+    }
+}
 ?>
