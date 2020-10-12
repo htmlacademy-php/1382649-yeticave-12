@@ -58,22 +58,34 @@ $count = $bids_count['count'];
 $sql_last_bid = "SELECT MAX(bid_value) AS max_bid_value FROM bid WHERE lot_id = " . $_GET['id'];
 $sql_last_bid_query = mysqli_query($db_connection, $sql_last_bid);
 $last_bid_value = mysqli_fetch_array($sql_last_bid_query);
-$min_bid_value = $last_bid_value[0] + $lot['lot_step'];
+if ($last_bid_value[0] == 0) {
+    $min_bid_value = $lot['lot_init_price'];
+} else {
+    $min_bid_value = $last_bid_value[0] + $lot['lot_step'];
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $error = null;
     if ($_POST['cost'] < $min_bid_value) {
-        $error = 'Мин. ставка должно быть '. $min_bid_value. ' p';
-    } else {
+        $error = 'Мин. ставка должно быть ' . $min_bid_value . ' p';
+    } else if (empty($_POST['cost'])) {
         $error = 'Введите ставку';
+    } else {
+        $sql_insert_new_bid = "INSERT INTO bid (user_id, lot_id, bid_value, bid_time)
+VALUES ('" . $_SESSION['user']['id'] . "', '" . $_GET['id'] . "', '" . $_POST['cost'] . "', '" . date('Y-m-d h-i-s') . "');";
+        $sql_insert_new_bid_query = mysqli_query($db_connection, $sql_insert_new_bid);
+        page_redirect("lot.php?id=" . $_GET['id']);
     }
+
 }
+$expired_lot = 'Истекший лот';
 
 $lot_layout = include_template('lot_layout.php', ['categories' => $categories, 'lot_name' => $lot['lot_name'],
     'image_url' => $lot['lot_image_url'], 'category_id' => $lot['lot_category'], 'description' => $lot['lot_description'],
     'init_price' => $lot['lot_init_price'], 'bid_value' => $lot['lot_bid_value'], 'expiration_date' => $lot['lot_final_date'],
     'bids' => $bids, 'bids_count' => $count, 'user_name' => $_SESSION['user']['name'], 'last_bid_value' => $last_bid_value[0],
-    'min_bid_value' => $min_bid_value, 'error'=>$error]);
+    'min_bid_value' => $min_bid_value, 'error' => $error]);
 echo $lot_layout;
+
 
 
