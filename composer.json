@@ -1,0 +1,15 @@
+{
+    "name": "kiskis/1382649-yeticave-12",
+    "description": "-",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nicoleta",
+            "email": "nicoleta.duca89@gmail.com"
+        }
+    ],
+    "require": {
+        "swiftmailer/swiftmailer": "^6.0"
+    }
+}
