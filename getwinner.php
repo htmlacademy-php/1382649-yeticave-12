@@ -8,20 +8,21 @@ $transport->setPassword('774a73ead5dd48');
 
 $mailer = new Swift_Mailer($transport);
 
-$expired_lots_sql_query = mysqli_query($db_connection, "SELECT id, name from lot WHERE final_date< NOW();");
-$expired_lots = mysqli_fetch_all($expired_lots_sql_query, MYSQLI_ASSOC);
-$winners = [];
-foreach ($expired_lots as $lots) {
-    $winners_sql_query = mysqli_query($db_connection, "SELECT user_id, user.name AS user_name, user.email, lot.id as lot_id, lot.name AS lot_name FROM bid
+$expired_lot_sql_query = mysqli_query($db_connection, "SELECT id, name from lot WHERE final_date< NOW() AND closed = 0 LIMIT 1;");
+$expired_lot = mysqli_fetch_array($expired_lot_sql_query, MYSQLI_ASSOC);
+
+if ($expired_lot != NULL) {
+    $winner_sql = "SELECT user_id, user.name AS user_name, user.email, lot.id as lot_id, lot.name AS lot_name FROM bid
 LEFT JOIN user ON bid.user_id = user.id
 LEFT JOIN lot ON lot.id = bid.lot_id
-WHERE lot_id = " . mysqli_real_escape_string($db_connection, $lots['id']) . " ORDER BY bid_value DESC LIMIT 1");
-    $winner = mysqli_fetch_array($winners_sql_query, MYSQLI_ASSOC);
-    if ($winner != null) {
-        array_push($winners, $winner);
-    }
-}
-foreach ($winners as $winner) {
+WHERE lot_id = " . mysqli_real_escape_string($db_connection, $expired_lot['id']) . " ORDER BY bid_value DESC LIMIT 1";
+
+    $winner_sql_query = mysqli_query($db_connection, $winner_sql);
+
+    $winner = mysqli_fetch_array($winner_sql_query, MYSQLI_ASSOC);
+
+    $update_column_closed_sql_query = mysqli_query($db_connection, "UPDATE lot SET closed = 1 WHERE id = " . $expired_lot['id']);
+
     $message = new Swift_Message();
     $message->setSubject("Ваша ставка победила");
     $message->setFrom('keks@phpdemo.ru');
@@ -30,9 +31,4 @@ foreach ($winners as $winner) {
     $message->setBody($content, 'text/html');
     $failures = [];
     $result = $mailer->send($message, $failures);
-    if ($result) {
-        print("Рассылка успешно отправлена");
-    } else {
-        print("Не удалось отправить рассылку");
-    }
 }
