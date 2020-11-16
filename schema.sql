@@ -56,3 +56,8 @@ ALTER TABLE user MODIFY password CHAR(60);
 
 CREATE FULLTEXT INDEX lots_search ON lot(name,description);
 
+ALTER TABLE lot
+ADD COLUMN closed int (1) AFTER final_date;
+
+UPDATE lot
+SET closed = 0 WHERE closed IS NULL;

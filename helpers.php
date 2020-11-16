@@ -425,4 +425,5 @@ function bid_time($bid_time)
         return date_format(date_create($bid_time), 'Y-m-d в H:i');
     }
 }
+
 ?>

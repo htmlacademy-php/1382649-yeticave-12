@@ -24,7 +24,7 @@ $sql_bets = "SELECT bid.user_id as user_id, bid.lot_id as lot_id, lot_img.image_
 WHERE bid.user_id=" . $_SESSION['user']['id'];
 $sql_bets_query = mysqli_query($db_connection, $sql_bets);
 $user_bets = mysqli_fetch_all($sql_bets_query, MYSQLI_ASSOC);
-
+echo $sql_bets;
 $content = include_template('my-bets_layout.php', ['categories' => $categories, 'username' => $_SESSION['user']['name'],
     'user_bets' => $user_bets]);
-print_r($content);
+print($content);
