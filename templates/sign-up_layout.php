@@ -1,16 +1,16 @@
 <?php require_once('helpers.php'); ?>
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title><?= $title ?></title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
+
 <body>
-
 <div class="page-wrapper">
-
     <header class="main-header">
         <div class="main-header__container container">
             <h1 class="visually-hidden">YetiCave</h1>
@@ -73,7 +73,7 @@
             </div>
             <span class="form__error form__error--bottom"><?= $warning_about_errors ?></span>
             <button type="submit" class="button">Зарегистрироваться</button>
-            <a class="text-link" href="#">Уже есть аккаунт</a>
+            <a class="text-link" href="login.php">Уже есть аккаунт</a>
         </form>
     </main>
 </div>

@@ -1,6 +1,7 @@
 <?php
 require_once("helpers.php");
 require_once("init.php");
+
 if ($_SESSION['user']['name'] == null) {
     header('HTTP/1.0 403 Forbidden');
     echo "<h1>Error 403</h1>";
@@ -27,7 +28,6 @@ $warning_about_errors = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $required_fields = ['lot-name', 'category', 'message', 'lot-image', 'lot-price', 'lot-step', 'lot-date'];
     $errors = [];
-
     $rules = [
         'lot-name' => function () {
             return validateText('lot-name', "Введите наименование лота", 50);
@@ -51,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             return validateDate();
         }
     ];
-
 
     foreach ($_POST as $key => $value) {
         if (isset($rules[$key])) {
@@ -89,18 +88,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $file_name = $_FILES['lot-image']['name'];
             $file_path = __DIR__ . '/uploads/';
             $file_url = '/uploads/' . $file_name;
-
             move_uploaded_file($_FILES['lot-image']['tmp_name'], $file_path . $file_name);
-
             $sql_insert_lot_image = "INSERT INTO lot_img (image_url, lot_id) VALUES ('" . $file_url . "' , '" . $last_id . "');";
             $sql_image_insert_query = mysqli_query($db_connection, $sql_insert_lot_image);
         }
-
-
         if (!empty($errors)) {
             $warning_about_errors = "Пожалуйста, исправьте ошибки в форме";
         }
-
         header('Location:/lot.php?id=' . $last_id);
         die();
     }
@@ -109,5 +103,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $layout = include_template('add-lot.php', ['title' => 'Добавление лота', 'username' => $_SESSION['user']['name'],
     'categories' => $categories, 'errors' => $errors, 'warning_about_errors' => $warning_about_errors]);
 print $layout;
-
 ?>

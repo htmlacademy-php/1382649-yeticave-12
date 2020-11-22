@@ -29,12 +29,12 @@
         ?>
     </ul>
 </section>
+
 <section class="lots">
     <div class="lots__header">
         <h2>Открытые лоты</h2>
     </div>
     <ul class="lots__list">
-        <!--заполните этот список из массива с товарами-->
         <?php
         foreach ($announces as $announce) {
             ?>

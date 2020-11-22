@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title><?= htmlspecialchars($lot_name) ?></title>
-
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
-<body>
 
+<body>
 <div class="page-wrapper">
     <header class="main-header">
         <div class="main-header__container container">

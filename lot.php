@@ -2,19 +2,16 @@
 require_once('helpers.php');
 require_once('init.php');
 
-//Connection with database
 $db_connection = mysqli_connect('localhost', 'root', 'root', "yeticave");
 mysqli_set_charset($db_connection, "utf8");
 if ($db_connection == false) {
     print("Ошибка подключения: " . mysqli_connect_error());
 }
 
-//Check if query parameters exists
 if (!isset($_GET['id'])) {
     return404();
 }
 $id = intval($_GET['id']);
-
 $sql_id = "SELECT id FROM lot WHERE id=" . $id;
 $sql_id_query = mysqli_query($db_connection, $sql_id);
 
@@ -22,9 +19,7 @@ if (mysqli_num_rows($sql_id_query) == 0) {
     return404();
 }
 
-// Extract categories from database
 $sql_category = "SELECT name FROM category;";
-
 $sql_category_query = mysqli_query($db_connection, $sql_category);
 
 $categories = [];
@@ -32,7 +27,6 @@ while ($category = mysqli_fetch_array($sql_category_query, MYSQLI_ASSOC)) {
     array_push($categories, $category['name']);
 }
 
-// Extract necesary info about lots from database
 $sql_lot = "SELECT lot.name as lot_name, lot.step as lot_step, lot.description as lot_description, lot.init_price as lot_init_price, lot.final_date as lot_final_date,
 bid.bid_value as lot_bid_value, user.name as bid_username, bid.bid_time as bid_time_insert, category.name as lot_category,
 lot_img.image_url as lot_image_url FROM lot
@@ -76,7 +70,6 @@ VALUES ('" . $_SESSION['user']['id'] . "', '" . $_GET['id'] . "', '" . $_POST['c
         $sql_insert_new_bid_query = mysqli_query($db_connection, $sql_insert_new_bid);
         page_redirect("lot.php?id=" . $_GET['id']);
     }
-
 }
 $expired_lot = 'Истекший лот';
 
@@ -86,6 +79,3 @@ $lot_layout = include_template('lot_layout.php', ['categories' => $categories, '
     'bids' => $bids, 'bids_count' => $count, 'user_name' => $_SESSION['user']['name'], 'last_bid_value' => $last_bid_value[0],
     'min_bid_value' => $min_bid_value, 'error' => $error]);
 echo $lot_layout;
-
-
-

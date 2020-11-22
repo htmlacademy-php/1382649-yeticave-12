@@ -27,7 +27,6 @@ if (!empty($_GET['search'])) {
     $reservedSymbols = ['-', '+', '<', '>', '@', '(', ')', '~'];
     $search_for_sql_whitout_symbols = str_replace($reservedSymbols, '', $search_for_sql);
 
-    //pagination
     $curent_page = isset($_GET['page']) ? $_GET['page'] : 1;
     $items_on_page = 1;
     $sql_lots_count = "SELECT COUNT(*) as lots_count FROM lot

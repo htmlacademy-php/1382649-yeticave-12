@@ -53,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-
 $layout = include_template('login_layout.php', ['categories' => $categories, 'errors' => $errors]);
 print($layout);
 ?>

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title>Error! Page not found!</title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
+
 <body>
-
 <div class="page-wrapper">
-
     <header class="main-header">
         <div class="main-header__container container">
             <h1 class="visually-hidden">YetiCave</h1>
@@ -35,14 +35,11 @@
     </header>
 
     <?php
-    // Connection with database
     $db_connection = mysqli_connect('localhost', 'root', 'root', "yeticave");
     mysqli_set_charset($db_connection, "utf8");
     if ($db_connection == false) {
         print("Ошибка подключения: " . mysqli_connect_error());
     }
-
-    // Extract list of categories from database
     $sql_categories = "SELECT name FROM category;";
     $categories_result = mysqli_query($db_connection, $sql_categories);
     if (!$categories_result) {

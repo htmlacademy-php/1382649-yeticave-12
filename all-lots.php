@@ -1,16 +1,15 @@
 <?php
 require_once('helpers.php');
 require_once('init.php');
-/* Подключение к БД */
 $db_connection = mysqli_connect('localhost', 'root', 'root', "yeticave");
 mysqli_set_charset($db_connection, "utf8");
 if ($db_connection == false) {
     print("Ошибка подключения: " . mysqli_connect_error());
 }
 
-/* SQL-запрос для получения списка категорий */
 $sql_categories = "SELECT name FROM category;";
 $categories_result = mysqli_query($db_connection, $sql_categories);
+
 if (!$categories_result) {
     $error = mysqli_error($db_connection);
     print("Ошибка MySQL: " . $error);
@@ -19,7 +18,6 @@ $categories = [];
 while ($category = mysqli_fetch_array($categories_result, MYSQLI_ASSOC)) {
     array_push($categories, $category['name']);
 }
-//pagination
 $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
 $number_of_lots_by_page = 1;
 $sql_count_of_lots = mysqli_query($db_connection, "SELECT COUNT(*) as cnt_of_lots from lot LEFT JOIN category ON lot.category_id = category.id

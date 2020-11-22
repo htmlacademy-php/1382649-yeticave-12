@@ -1,6 +1,7 @@
 <?php require_once('helpers.php'); ?>
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title><?= $title ?></title>
@@ -8,10 +9,9 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/flatpickr.min.css" rel="stylesheet">
 </head>
+
 <body>
-
 <div class="page-wrapper">
-
     <header class="main-header">
         <div class="main-header__container container">
             <h1 class="visually-hidden">YetiCave</h1>
@@ -44,14 +44,12 @@
                 ?>
             </ul>
         </nav>
+
         <form class="form form--add-lot container form--invalid" name="add-lot" action="add.php" method="post"
               enctype="multipart/form-data">
-            <!-- form--invalid -->
             <h2>Добавление лота</h2>
             <div class="form__container-two">
-
                 <div class="form__item  <?= isset($errors['lot-name']) ? "form__item--invalid" : ""; ?>">
-                    <!-- form__item--invalid -->
                     <label for="lot-name">Наименование <sup>*</sup></label>
                     <input id="lot-name" type="text" name="lot-name" placeholder="Введите наименование лота"
                            value="<?= getPostVal(htmlspecialchars('lot-name')); ?>">
@@ -111,10 +109,8 @@
             </div>
             <span class="form__error form__error--bottom"><?= $warning_about_errors ?></span>
             <button type="submit" class="button" name="submit_btn">Добавить лот</button>
-
         </form>
     </main>
-
 </div>
 
 <?php require_once 'footer.php'; ?>
