@@ -23,7 +23,7 @@
             <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
             <nav class="user-menu">
                 <?php
-                if ($_SESSION['user']['name'] != null) { ?>
+                if ($user_name != null) { ?>
                     <div class="user-menu__logged">
                         <p><?= htmlspecialchars($user_name) ?></p>
                         <a class="user-menu__bets" href="my-bets.php">Мои ставки</a>
@@ -55,7 +55,7 @@
         </nav>
         <div class="container">
             <section class="lots">
-                <h2>Все лоты в категории <span>"<?= htmlspecialchars($_GET['category']) ?>"</span></h2>
+                <h2>Все лоты в категории <span>"<?= htmlspecialchars(isset($_GET['category'])?$_GET['category']:''); ?>"</span></h2>
                 <ul class="lots__list">
                     <? foreach ($all_lots as $lot) { ?>
 
@@ -88,7 +88,7 @@
             <?php if ($number_of_pages > 1) { ?>
                 <ul class="pagination-list">
                     <li class="pagination-item pagination-item-prev">
-                        <?php if ($_GET['page'] > 1) { ?>
+                        <?php if (isset($_GET['page']) > 1) { ?>
                         <a href="<?= htmlspecialchars(addOrUpdateUrlParam('page', $current_page - 1)); ?>">
                             Назад</a></li>
                     <?php } ?>
@@ -97,7 +97,7 @@
                             <a href="<?= addOrUpdateUrlParam('page', $page) ?>"><?= $page ?></a></li>
                     <?php } ?>
                     <li class="pagination-item pagination-item-next">
-                        <?php if ($_GET['page'] < $number_of_pages) { ?>
+                        <?php if (isset($_GET['page']) < $number_of_pages) { ?>
                         <a href="<?= htmlspecialchars(addOrUpdateUrlParam('page', $current_page + 1)) ?>">Вперед</a>
                     </li>
                 <?php } ?>

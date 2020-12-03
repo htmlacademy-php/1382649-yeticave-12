@@ -1,6 +1,7 @@
 <?php
 require_once('vendor/autoload.php');
 require_once('db_connection.php');
+require_once('init.php');
 
 $transport = new Swift_SmtpTransport('smtp.mailtrap.io', 2525);
 $transport->setUsername('7846549fa28176');

@@ -1,7 +1,8 @@
 <?php
 require_once('helpers.php');
+require_once('functions.php');
 require_once('init.php');
-$db_connection = mysqli_connect('localhost', 'root', 'root', 'yeticave');
+require_once ('db_connection.php');
 mysqli_set_charset($db_connection, 'utf8');
 if ($db_connection == false) {
     print("Ошибка подключения: " . mysqli_connect_error());
@@ -13,8 +14,8 @@ while ($category = mysqli_fetch_array($sql_categorie_query, MYSQLI_ASSOC)) {
     array_push($categories, $category['name']);
 }
 
+$errors = [];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $errors = [];
     $rules = [
         'email' => function () use ($db_connection) {
             return verifyEmail($_POST['email'], $db_connection);

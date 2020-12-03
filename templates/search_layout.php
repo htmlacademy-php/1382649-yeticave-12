@@ -1,4 +1,5 @@
-<?php require_once('helpers.php'); ?>
+<?php
+require_once('functions.php'); ?>
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -19,13 +20,13 @@
             </a>
             <form class="main-header__search" method="get" action="search.php" autocomplete="off">
                 <input type="search" name="search" placeholder="Поиск лота"
-                       value="<?= htmlspecialchars($_GET['search']) ?>">
+                       value="<?= htmlspecialchars(isset($_GET['search'])?$_GET['search']:''); ?>">
                 <input class="main-header__search-btn" type="submit" name="find" value="Найти">
             </form>
             <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
             <nav class="user-menu">
                 <?php
-                if ($_SESSION['user']['name'] != null) { ?>
+                if ($user_name != null) { ?>
                     <div class="user-menu__logged">
                         <p><?= htmlspecialchars($user_name) ?></p>
                         <a class="user-menu__bets" href="my-bets.php">Мои ставки</a>
@@ -65,7 +66,7 @@
                     <?php foreach ($search_result as $lot) { ?>
                         <li class="lots__item lot">
                             <div class="lot__image">
-                                <img src="/<?= htmlspecialchars($lot['lot_image_url']) ?>" width="350" height="260"
+                                <img src="<?= htmlspecialchars($lot['lot_image_url']) ?>" width="350" height="260"
                                      alt="<?= htmlspecialchars($lot['lot_name']) ?>">
                             </div>
                             <div class="lot__info">

@@ -1,5 +1,6 @@
 <?php
-require_once('helpers.php');
+
+require_once('functions.php');
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -24,10 +25,9 @@ require_once('helpers.php');
                 <input class="main-header__search-btn" type="submit" name="find" value="Найти">
             </form>
             <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
-            <!-- здесь должен быть PHP код для показа меню и данных пользователя -->
             <nav class="user-menu">
                 <?php
-                if ($_SESSION['user']['name'] != null) { ?>
+                if ($user_name != null) { ?>
                     <div class="user-menu__logged">
                         <p><?= htmlspecialchars($user_name) ?></p>
                         <a class="user-menu__bets" href="my-bets.php">Мои ставки</a>
@@ -52,7 +52,6 @@ require_once('helpers.php');
 </div>
 
 <?php require_once 'footer.php'; ?>
-
 <script src="flatpickr.js"></script>
 <script src="script.js"></script>
 </body>

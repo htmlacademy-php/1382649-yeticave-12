@@ -1,4 +1,5 @@
-<?php require_once('helpers.php'); ?>
+<?php
+require_once('functions.php'); ?>
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -52,14 +53,14 @@
                 <div class="form__item  <?= isset($errors['lot-name']) ? "form__item--invalid" : ""; ?>">
                     <label for="lot-name">Наименование <sup>*</sup></label>
                     <input id="lot-name" type="text" name="lot-name" placeholder="Введите наименование лота"
-                           value="<?= getPostVal(htmlspecialchars('lot-name')); ?>">
+                           value="<?= htmlspecialchars(getPostVal('lot-name')); ?>">
                     <span class="form__error"><?= $errors['lot-name'] ?></span>
                 </div>
                 <div class="form__item <?= isset($errors['category']) ? "form__item--invalid" : ""; ?>">
                     <!-- form__item--invalid -->
                     <label for="category">Категория <sup>*</sup></label>
                     <select id="category" name="category"
-                            value="<?= getPostVal('category'); ?>">
+                            value="<?= htmlspecialchars(getPostVal('category')); ?>">
                         <option>Выберите категорию</option>
                         <?php foreach ($categories as $category) { ?>
                             <option><?= htmlspecialchars($category) ?></option>

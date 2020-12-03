@@ -23,7 +23,7 @@
             <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
             <nav class="user-menu">
                 <?php
-                if ($_SESSION['user']['name'] != null) { ?>
+                if ($user_name != null) { ?>
                     <div class="user-menu__logged">
                         <p><?= htmlspecialchars($user_name) ?></p>
                         <a class="user-menu__bets" href="my-bets.php">Мои ставки</a>
@@ -59,7 +59,7 @@
             <div class="lot-item__content">
                 <div class="lot-item__left">
                     <div class="lot-item__image">
-                        <img src="../<?= htmlspecialchars($image_url) ?>" width="730" height="548"
+                        <img src="<?= htmlspecialchars($image_url) ?>" width="730" height="548"
                              alt="<?= htmlspecialchars($lot_name) ?>">
                     </div>
                     <p class="lot-item__category">Категория: <span> <?= $category_id ?> </span></p>
@@ -70,36 +70,32 @@
                         <?php if (strtotime($expiration_date) < strtotime('now')) { ?>
                             <?= 'Срок действия лота истек' ?>
                         <?php } else { ?>
-                            <?php if ($_SESSION['user']['name'] != null) { ?>
+                            <div
+                                class="lot-item__timer"> <?= htmlspecialchars(remaining_time($expiration_date)) ?></div>
 
-                                <div
-                                    class="lot-item__timer"> <?= htmlspecialchars(remaining_time($expiration_date)) ?></div>
-
-                                <div class="lot-item__cost-state">
-                                    <div class="lot-item__rate">
-                                        <span class="lot-item__amount">Текущая цена</span>
-                                        <span class="lot-item__cost">
+                            <div class="lot-item__cost-state">
+                                <div class="lot-item__rate">
+                                    <span class="lot-item__amount">Текущая цена</span>
+                                    <span class="lot-item__cost">
                                     <?= $last_bid_value == 0 ? formatting_prices($init_price) : formatting_prices(htmlspecialchars($last_bid_value)); ?>
                                 </span>
-                                    </div>
-
-                                    <div class="lot-item__min-cost">
-                                        Мин. ставка <span><?= htmlspecialchars($min_bid_value . ' р') ?></span>
-                                    </div>
                                 </div>
-                                <?php if ($_SESSION['user']['name'] != null) { ?>
-                                    <form class="lot-item__form" action="lot.php?id=<?= $_GET['id'] ?>" method="post"
-                                          autocomplete="off">
-                                        <p class="lot-item__form-item <?= isset($error) ? 'form__item form__item--invalid' : '' ?> ">
-                                            <!--form__item form__item--invalid -->
-                                            <label for="cost">Ваша ставка</label>
-                                            <input id="cost" type="text" name="cost"
-                                                   placeholder="<?= htmlspecialchars($min_bid_value) ?>">
-                                            <span class="form__error"> <?= $error ?></span>
-                                        </p>
-                                        <button type="submit" class="button">Сделать ставку</button>
-                                    </form>
-                                <?php } ?>
+
+                                <div class="lot-item__min-cost">
+                                    Мин. ставка <span><?= htmlspecialchars($min_bid_value . ' р') ?></span>
+                                </div>
+                            </div>
+                            <?php if ($user_name != null && $user_name != $user_lot) { ?>
+                                <form class="lot-item__form" action="lot.php?id=<?= $_GET['id'] ?>" method="post"
+                                      autocomplete="off">
+                                    <p class="lot-item__form-item <?= isset($error) ? 'form__item form__item--invalid' : '' ?> ">
+                                        <label for="cost">Ваша ставка</label>
+                                        <input id="cost" type="text" name="cost"
+                                               placeholder="<?= htmlspecialchars($min_bid_value) ?>">
+                                        <span class="form__error"> <?= $error ?></span>
+                                    </p>
+                                    <button type="submit" class="button">Сделать ставку</button>
+                                </form>
                             <?php } ?>
                         <?php } ?>
                     </div>

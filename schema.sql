@@ -61,3 +61,6 @@ ADD COLUMN closed int (1) AFTER final_date;
 
 UPDATE lot
 SET closed = 0 WHERE closed IS NULL;
+
+ALTER TABLE lot
+ADD COLUMN user_lot varchar(255) AFTER closed;

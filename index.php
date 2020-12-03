@@ -1,14 +1,9 @@
 <?php
 require_once('helpers.php');
+require_once('functions.php');
 require_once('init.php');
 require_once('getwinner.php');
-
-$db_connection = mysqli_connect('localhost', 'root', 'root', "yeticave");
-mysqli_set_charset($db_connection, "utf8");
-if ($db_connection == false) {
-    print("Ошибка подключения: " . mysqli_connect_error());
-}
-
+require_once('db_connection.php');
 $sql_categories = "SELECT name FROM category;";
 $categories_result = mysqli_query($db_connection, $sql_categories);
 if (!$categories_result) {
@@ -33,9 +28,10 @@ if (!$lots_result) {
     print("Ошибка MySQL: " . $error);
 }
 
+$user_name = isset($_SESSION['user']['name']) ? $_SESSION['user']['name'] : null;
 $lots = mysqli_fetch_all($lots_result, MYSQLI_ASSOC);
 $main = include_template('main.php', ['categories' => $categories, 'announces' => $lots]);
-$content = include_template('layout.php', ['content' => $main, 'user_name' => $_SESSION['user']['name'], 'title' => 'Главная',
+$content = include_template('layout.php', ['content' => $main, 'user_name' => $user_name, 'title' => 'Главная',
     'categories' => $categories]);
 print ($content);
 ?>

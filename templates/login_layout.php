@@ -49,13 +49,13 @@
             <div class="form__item <?= isset($errors['email']) ? "form__item--invalid" : ""; ?>">
                 <label for="email">E-mail <sup>*</sup></label>
                 <input id="email" type="text" name="email" placeholder="Введите e-mail"
-                       value="<?= htmlspecialchars(getPostVal($_POST['email'])) ?>">
+                       value="<?= htmlspecialchars(getPostVal(isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '')); ?>">
                 <span class="form__error"><?= $errors['email'] ?></span>
             </div>
             <div class="form__item <?= isset($errors['password']) ? "form__item--invalid" : ""; ?> ">
                 <label for="password">Пароль <sup>*</sup></label>
                 <input id="password" type="password" name="password" placeholder="Введите пароль"
-                       value="<?= htmlspecialchars(getPostVal($_POST['password'])) ?>">
+                       value="<?= htmlspecialchars(getPostVal(isset($_POST['password']) ?  htmlspecialchars($_POST['password']) : '')); ?>">
                 <span class="form__error"><?= $errors['password'] ?></span>
             </div>
             <button type="submit" class="button">Войти</button>

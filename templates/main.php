@@ -55,7 +55,7 @@
                             </span>
                         </div>
 
-                        <?php require_once('helpers.php');
+                        <?php require_once('functions.php');
                         $remaining_time = get_dt_range($announce['expiration_date']);
                         if ($remaining_time[0] >= '1') {
                             echo '<div class="lot__timer timer">';

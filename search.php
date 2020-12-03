@@ -1,18 +1,17 @@
 <?php
 require_once "helpers.php";
+require_once('functions.php');
 require_once "init.php";
-
-$db_connection = mysqli_connect('localhost', 'root', 'root', 'yeticave');
-mysqli_set_charset($db_connection, 'utf-8');
-
-if ($db_connection == false) {
-    print("Ошибка подключения: " . mysqli_connect_error());
-}
+require_once "db_connection.php";
 $sql_categories = mysqli_query($db_connection, "SELECT name FROM category;");
 $categories = [];
 while ($category = mysqli_fetch_array($sql_categories, MYSQLI_ASSOC)) {
     array_push($categories, $category['name']);
 }
+$search_result = [];
+$number_of_pages = 0;
+$curent_page = 0;
+$pages = 0;
 
 if (!empty($_GET['search'])) {
     $search = trim($_GET['search']);
@@ -28,7 +27,7 @@ if (!empty($_GET['search'])) {
     $search_for_sql_whitout_symbols = str_replace($reservedSymbols, '', $search_for_sql);
 
     $curent_page = isset($_GET['page']) ? $_GET['page'] : 1;
-    $items_on_page = 1;
+    $items_on_page = 6;
     $sql_lots_count = "SELECT COUNT(*) as lots_count FROM lot
 WHERE MATCH(lot.name, lot.description) AGAINST('" . mysqli_real_escape_string($db_connection, $search_for_sql_whitout_symbols) .
         "' IN BOOLEAN MODE);";
@@ -52,9 +51,9 @@ WHERE MATCH(lot.name, lot.description) AGAINST('" . mysqli_real_escape_string($d
 } else {
     $search_error = "Введите ключевое слово для поиска";
 }
-
+$user_name = isset($_SESSION['user']['name']) ? $_SESSION['user']['name'] : null;
 $layout = include_template('search_layout.php', ['categories' => $categories,
-    'user_name' => $_SESSION['user']['name'], 'search_result' => $search_result, 'search_error' => $search_error,
+    'user_name' => $user_name, 'search_result' => $search_result, 'search_error' => $search_error,
     'number_of_pages' => $number_of_pages, 'curent_page' => $curent_page, 'pages' => $pages]);
 print $layout;
 ?>

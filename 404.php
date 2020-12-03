@@ -1,6 +1,9 @@
+<?php
+require_once('init.php');
+require_once('db_connection.php');
+?>
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <title>Error! Page not found!</title>
@@ -24,10 +27,10 @@
             <nav class="user-menu">
                 <ul class="user-menu__list">
                     <li class="user-menu__item">
-                        <a href="sign-up.html">Регистрация</a>
+                        <a href="sign-up.php">Регистрация</a>
                     </li>
                     <li class="user-menu__item">
-                        <a href="login.html">Вход</a>
+                        <a href="login.php">Вход</a>
                     </li>
                 </ul>
             </nav>
@@ -35,11 +38,7 @@
     </header>
 
     <?php
-    $db_connection = mysqli_connect('localhost', 'root', 'root', "yeticave");
-    mysqli_set_charset($db_connection, "utf8");
-    if ($db_connection == false) {
-        print("Ошибка подключения: " . mysqli_connect_error());
-    }
+
     $sql_categories = "SELECT name FROM category;";
     $categories_result = mysqli_query($db_connection, $sql_categories);
     if (!$categories_result) {

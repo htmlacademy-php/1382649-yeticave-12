@@ -1,4 +1,5 @@
-<?php require_once('helpers.php');
+<?php
+require_once('functions.php');
 require_once('db_connection.php');
 ?>
 <!DOCTYPE html>
@@ -47,8 +48,9 @@ require_once('db_connection.php');
         <section class="rates container">
             <h2>Мои ставки</h2>
             <table class="rates__list">
-                <?php foreach ($user_bets as $user_bet) {
-                    $time_val = remaining_time_bet($user_bet['fin_data'], $user_bet['user_id'], $user_bet['lot_id'], $db_connection) ?>
+                <?php
+                foreach ($user_bets as $user_bet) {
+                    $time_val = remaining_time_bet($user_bet['fin_data'], $user_bet['user_id'], $user_bet['lot_id']) ?>
                     <tr class=" <?= htmlspecialchars($time_val['line_background_style']) ?>">
                         <td class="rates__info">
                             <div class="rates__img">
@@ -77,7 +79,8 @@ require_once('db_connection.php');
                             <?= htmlspecialchars(bid_time($user_bet['bid_time'])); ?>
                         </td>
                     </tr>
-                <?php } ?>
+                    <?php
+                } ?>
             </table>
         </section>
     </main>
