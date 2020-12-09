@@ -23,7 +23,7 @@
             <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
             <nav class="user-menu">
                 <?php
-                if ($user_name != null) { ?>
+                if ($user_name !== null) { ?>
                     <div class="user-menu__logged">
                         <p><?= htmlspecialchars($user_name) ?></p>
                         <a class="user-menu__bets" href="my-bets.php">Мои ставки</a>
@@ -42,7 +42,6 @@
             </nav>
         </div>
     </header>
-
     <main>
         <nav class="nav">
             <ul class="nav__list container">
@@ -77,7 +76,7 @@
                                 <div class="lot-item__rate">
                                     <span class="lot-item__amount">Текущая цена</span>
                                     <span class="lot-item__cost">
-                                    <?= $last_bid_value == 0 ? formatting_prices($init_price) : formatting_prices(htmlspecialchars($last_bid_value)); ?>
+                                    <?= $last_bid_value === 0 ? formatting_prices($init_price) : formatting_prices(htmlspecialchars($last_bid_value)); ?>
                                 </span>
                                 </div>
 
@@ -85,7 +84,7 @@
                                     Мин. ставка <span><?= htmlspecialchars($min_bid_value . ' р') ?></span>
                                 </div>
                             </div>
-                            <?php if ($user_name != null && $user_name != $user_lot) { ?>
+                            <?php if ($user_name !== null && $user_name !== $user_lot) { ?>
                                 <form class="lot-item__form" action="lot.php?id=<?= $_GET['id'] ?>" method="post"
                                       autocomplete="off">
                                     <p class="lot-item__form-item <?= isset($error) ? 'form__item form__item--invalid' : '' ?> ">

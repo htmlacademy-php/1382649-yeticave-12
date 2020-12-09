@@ -6,17 +6,17 @@
         <?php
         foreach ($categories as $item) {
             $symbol = '';
-            if ($item == 'Доски и лыжи') {
+            if ($item === 'Доски и лыжи') {
                 $symbol = "boards";
-            } else if ($item == 'Крепления') {
+            } else if ($item === 'Крепления') {
                 $symbol = "attachment";
-            } else if ($item == 'Ботинки') {
+            } else if ($item === 'Ботинки') {
                 $symbol = "boots";
-            } else if ($item == 'Одежда') {
+            } else if ($item === 'Одежда') {
                 $symbol = "clothing";
-            } else if ($item == 'Инструменты') {
+            } else if ($item === 'Инструменты') {
                 $symbol = "tools";
-            } else if ($item == 'Разное') {
+            } else if ($item === 'Разное') {
                 $symbol = "other";
             }
             ?>

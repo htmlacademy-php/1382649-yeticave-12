@@ -23,7 +23,7 @@
             <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
             <nav class="user-menu">
                 <?php
-                if ($user_name != null) { ?>
+                if ($user_name !== null) { ?>
                     <div class="user-menu__logged">
                         <p><?= htmlspecialchars($user_name) ?></p>
                         <a class="user-menu__bets" href="my-bets.php">Мои ставки</a>
@@ -57,7 +57,7 @@
             <section class="lots">
                 <h2>Все лоты в категории <span>"<?= htmlspecialchars(isset($_GET['category'])?$_GET['category']:''); ?>"</span></h2>
                 <ul class="lots__list">
-                    <? foreach ($all_lots as $lot) { ?>
+                    <?php foreach ($all_lots as $lot) { ?>
 
                         <li class="lots__item lot">
                             <div class="lot__image">
@@ -93,7 +93,7 @@
                             Назад</a></li>
                     <?php } ?>
                     <?php foreach ($array_of_pages as $page) { ?>
-                        <li class="pagination-item <?= $current_page == $page ? 'pagination-item-active' : '' ?> ">
+                        <li class="pagination-item <?= $current_page === $page ? 'pagination-item-active' : '' ?> ">
                             <a href="<?= addOrUpdateUrlParam('page', $page) ?>"><?= $page ?></a></li>
                     <?php } ?>
                     <li class="pagination-item pagination-item-next">

@@ -18,7 +18,7 @@ $get_category = isset($_GET['category']) ? $_GET['category'] : '';
 $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
 $number_of_lots_by_page = 6;
 $sql_count_of_lots = mysqli_query($db_connection, "SELECT COUNT(*) as cnt_of_lots from lot LEFT JOIN category ON lot.category_id = category.id
-WHERE category.name = '" . $get_category . "' AND lot.final_date > NOW()");
+WHERE category.name = '" . mysqli_real_escape_string($db_connection,$get_category) . "' AND lot.final_date > NOW()");
 $count_of_lots_by_category = mysqli_fetch_assoc($sql_count_of_lots) ['cnt_of_lots'];
 $number_of_pages = ceil($count_of_lots_by_category / $number_of_lots_by_page);
 $offset = ($current_page - 1) * $number_of_lots_by_page;

@@ -44,7 +44,7 @@ WHERE MATCH(lot.name, lot.description) AGAINST('" . mysqli_real_escape_string($d
                 WHERE MATCH(lot.name, lot.description) AGAINST('" . mysqli_real_escape_string($db_connection, $search_for_sql_whitout_symbols) .
         "' IN BOOLEAN MODE) ORDER BY id DESC LIMIT " . $items_on_page . " OFFSET " . $offset . ";";
     $search_result = '';
-    if ($search != null) {
+    if ($search !== null) {
         $sql_lot_query = mysqli_query($db_connection, $sql_lot);
         $search_result = mysqli_fetch_all($sql_lot_query, MYSQLI_ASSOC);
     }

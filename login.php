@@ -4,7 +4,7 @@ require_once('functions.php');
 require_once('init.php');
 require_once ('db_connection.php');
 mysqli_set_charset($db_connection, 'utf8');
-if ($db_connection == false) {
+if ($db_connection === false) {
     print("Ошибка подключения: " . mysqli_connect_error());
 }
 
@@ -15,7 +15,7 @@ while ($category = mysqli_fetch_array($sql_categorie_query, MYSQLI_ASSOC)) {
 }
 
 $errors = [];
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rules = [
         'email' => function () use ($db_connection) {
             return verifyEmail($_POST['email'], $db_connection);
@@ -37,14 +37,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql_verify_email_query = mysqli_query($db_connection, $sql_verify_email);
     $user = $sql_verify_email_query ? mysqli_fetch_array($sql_verify_email_query, MYSQLI_ASSOC) : null;
 
-    if (count($errors) == 0 && $user) {
+    if (count($errors) === 0 && $user) {
         if (password_verify($_POST['password'], $user['password'])) {
             $_SESSION['user'] = $user;
         } else {
             $errors['password'] = 'Неверный пароль';
         }
     }
-    if($_POST['email']!=$user['email']) {
+    if($_POST['email']!==$user['email']) {
         $errors['email'] = 'Такой пользователь не найден';
     }
 

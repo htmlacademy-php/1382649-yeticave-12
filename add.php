@@ -22,7 +22,7 @@ while ($category = mysqli_fetch_array($sql_categories_query, MYSQLI_ASSOC)) {
 $warning_about_errors = "";
 $errors = [];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $required_fields = ['lot-name', 'category', 'message', 'lot-image', 'lot-price', 'lot-step', 'lot-date'];
     $rules = [
         'lot-name' => function () {
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     $errors = array_filter($errors);
 
-    $sql_selected_category = "SELECT id FROM category WHERE name ='" . $_POST['category'] . '\'';
+    $sql_selected_category = "SELECT id FROM category WHERE name ='" . mysqli_real_escape_string($db_connection, $_POST['category']) . '\'';
     $selected_category_query = mysqli_query($db_connection, $sql_selected_category);
     $selected_category = mysqli_fetch_array($selected_category_query, MYSQLI_ASSOC);
     $category_id = $selected_category['id'];
@@ -76,8 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $safe_lot_user = mysqli_real_escape_string($db_connection, $_SESSION['user']['name']);
         $status = 0;
 
-        $sql_lot_insert = "INSERT INTO lot (name, category_id, description, init_price, step, final_date, user_lot, closed)
-        VALUES ('" . $safe_lot_name . "', " . "'" . $safe_category_id . "', '" . $safe_message . "', '" .
+        $sql_lot_insert = "INSERT INTO lot (name, category_id, description, init_price, step, final_date,
+                 user_lot, closed) VALUES ('" . $safe_lot_name . "', " . "'" . $safe_category_id . "', '" . $safe_message . "', '" .
             $safe_lot_rate . "', '" . $safe_lot_step . "', '" . $safe_lot_date . "', '" . $safe_lot_user . "', $status);";
 
         $sql_lot_insert_query = mysqli_query($db_connection, $sql_lot_insert);
@@ -87,7 +87,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $file_path = __DIR__ . '/uploads/';
             $file_url = '/uploads/' . $file_name;
             move_uploaded_file($_FILES['lot-image']['tmp_name'], $file_path . $file_name);
-            $sql_insert_lot_image = "INSERT INTO lot_img (image_url, lot_id) VALUES ('" . $file_url . "' , '" . $last_id . "');";
+            $sql_insert_lot_image = "INSERT INTO lot_img (image_url, lot_id) VALUES
+                                               ('" . mysqli_real_escape_string($db_connection, $file_url) . "' ,
+                                                '" . mysqli_real_escape_string($db_connection, $last_id) . "');";
             $sql_image_insert_query = mysqli_query($db_connection, $sql_insert_lot_image);
         }
         if (!empty($errors)) {

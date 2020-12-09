@@ -12,7 +12,7 @@ $mailer = new Swift_Mailer($transport);
 $expired_lot_sql_query = mysqli_query($db_connection, "SELECT id, name from lot WHERE final_date< NOW() AND closed = 0 LIMIT 1;");
 $expired_lot = mysqli_fetch_array($expired_lot_sql_query, MYSQLI_ASSOC);
 
-if ($expired_lot != NULL) {
+if ($expired_lot !== NULL) {
     $winner_sql = "SELECT user_id, user.name AS user_name, user.email, lot.id as lot_id, lot.name AS lot_name FROM bid
 LEFT JOIN user ON bid.user_id = user.id
 LEFT JOIN lot ON lot.id = bid.lot_id

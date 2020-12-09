@@ -52,7 +52,7 @@ require_once('functions.php'); ?>
             <div class="form__item <?= isset($errors['email']) ? "form__item--invalid" : ""; ?>">
                 <label for="email">E-mail <sup>*</sup></label>
                 <input id="email" type="text" name="email" placeholder="Введите e-mail"
-                       value="<?= getPostVal(htmlspecialchars('email')) ?>">
+                       value="<?= htmlspecialchars(getPostVal('email')) ?>">
                 <span class="form__error"><?= $errors['email'] ?></span>
             </div>
             <div class="form__item <?= isset($errors['password']) ? "form__item--invalid" : ""; ?>">
@@ -63,13 +63,13 @@ require_once('functions.php'); ?>
             <div class="form__item <?= isset($errors['name']) ? "form__item--invalid" : ""; ?>">
                 <label for="name">Имя <sup>*</sup></label>
                 <input id="name" type="text" name="name" placeholder="Введите имя"
-                       value="<?= getPostVal(htmlspecialchars('name')) ?>">
+                       value="<?= htmlspecialchars(getPostVal('name')) ?>">
                 <span class="form__error"><?= $errors['name'] ?></span>
             </div>
             <div class="form__item <?= isset($errors['message']) ? "form__item--invalid" : ""; ?>">
                 <label for="message">Контактные данные <sup>*</sup></label>
                 <textarea id="message" name="message" placeholder="Напишите как с вами связаться"
-                          ?> <?= getPostVal(htmlspecialchars('message')) ?></textarea>
+                          value="<?= htmlspecialchars(getPostVal('message')) ?>"></textarea>
                 <span class="form__error"><?= $errors['message'] ?></span>
             </div>
             <span class="form__error form__error--bottom"><?= $warning_about_errors ?></span>

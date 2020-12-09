@@ -11,7 +11,7 @@ while ($category = mysqli_fetch_array($sql_categories, MYSQLI_ASSOC)) {
 
 $errors = [];
 $warning_about_errors = '';
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $required_fields = ['email', 'password', 'name', 'message'];
     $rules = [
         'email' => function () use ($db_connection) {

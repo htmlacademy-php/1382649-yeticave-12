@@ -1,6 +1,6 @@
 <?php
 
-require_once ('db_connection.php');
+require_once('db_connection.php');
 
 function formatting_prices($price)
 {
@@ -84,7 +84,7 @@ function validateIssetCategory($categories, $category)
 
 function validateImage($name)
 {
-    if ($_FILES[$name]['size'] == 0) {
+    if ($_FILES[$name]['size'] === 0) {
         return "Загрузите картинку";
     }
     if (isset($_FILES[$name])) {
@@ -143,18 +143,19 @@ function validateDate()
 
 function validateEmail($email, $db_connection)
 {
-    if (empty($email)) {
+    $sanitized_email = filter_var($email, FILTER_SANITIZE_EMAIL);
+    if (empty($sanitized_email)) {
         return "Введите адрес электронной почты";
     }
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if (!filter_var($sanitized_email, FILTER_VALIDATE_EMAIL)) {
         return 'Вы ввели неправильный адрес электронной почты';
     }
 
-    $sql_compare_email = "SELECT email FROM user WHERE email ='" . $email . "';";
+    $sql_compare_email = "SELECT email FROM user WHERE email ='" . mysqli_real_escape_string($sanitized_email) . "';";
     $sql_compare_email_query = mysqli_query($db_connection, $sql_compare_email);
     $sql_email_comparation_result = mysqli_fetch_array($sql_compare_email_query, MYSQLI_NUM);
-    if ($sql_email_comparation_result != NULL) {
+    if ($sql_email_comparation_result !== NULL) {
         return 'Такой адрес электронной почты уже существует';
     }
 
@@ -163,9 +164,10 @@ function validateEmail($email, $db_connection)
 
 function validatePassword($password)
 {
-    if (strlen($password) == 0) {
+    if (strlen($password) === 0) {
         return "Введите пароль";
-    } else if (strlen($password) < 8) {
+    }
+    else if (strlen($password) < 8) {
         return "Пароль должен иметь минимум 8 символов";
     }
 
@@ -232,22 +234,25 @@ function remaining_time_bet($expiration_time, $user_id, $user_lot)
 {
     $winner = winner_user($user_lot, $user_id, $expiration_time);
     $time = get_dt_range($expiration_time);
-    if ($winner == 1) {
+    if ($winner === 1) {
         return remaining_time_bet_array_values(
             'rates__item rates__item--win',
             'timer timer--win',
             'Ставка выиграла', 'Телефон +7 900 667-84-48, Скайп: Vlas92. Звонить с 14 до 20');
-    } else if ($time[0] > 24) {
+    }
+    else if ($time[0] > 24) {
         return remaining_time_bet_array_values(
             'rates__item',
             'timer',
             $time[0] . ':' . $time[1], '');
-    } else if ($time[0] < 0) {
+    }
+    else if ($time[0] < 0) {
         return remaining_time_bet_array_values(
             'rates__item rates__item--end',
             'timer timer--end',
             'Торги окончены', '');
-    } else if ($time[0] <= 24) {
+    }
+    else if ($time[0] <= 24) {
         return remaining_time_bet_array_values(
             'rates__item',
             'timer timer--finishing',
@@ -257,12 +262,13 @@ function remaining_time_bet($expiration_time, $user_id, $user_lot)
 
 function winner_user($user_bet_lot_id, $user_bet_user_id, $expiration_time)
 {
+    global $db_connection;
     $winner = 0;
     if (strtotime($expiration_time) < strtotime('now')) {
         $sql_last_bet_id = "SELECT user_id, id as max_id FROM bid WHERE lot_id = " . $user_bet_lot_id . " ORDER BY id DESC LIMIT 1";
-        $sql_last_bet_id_query = mysqli_query($sql_last_bet_id);
+        $sql_last_bet_id_query = mysqli_query($db_connection, $sql_last_bet_id);
         $last_bet_id = mysqli_fetch_array($sql_last_bet_id_query, MYSQLI_ASSOC);
-        if ($last_bet_id['user_id'] == $user_bet_user_id) {
+        if ($last_bet_id['user_id'] === $user_bet_user_id) {
             $winner = 1;
         }
     }
@@ -274,15 +280,17 @@ function bid_time($bid_time)
     $bid_time_strtotime = strtotime('now') - strtotime($bid_time);
     $bid_time_minutes = ceil($bid_time_strtotime / 60);
     $bid_time_hours = floor($bid_time_strtotime / 3600);
-    if ($bid_time_hours == 0 && ($bid_time_minutes >= 0 || ($bid_time_minutes < 60))) {
+    if ($bid_time_hours === 0 && ($bid_time_minutes >= 0 || ($bid_time_minutes < 60))) {
         return $bid_time_minutes . ' ' . get_noun_plural_form($bid_time_minutes, 'минута назад', 'минуты назад', 'минут назад');
-    } else if ($bid_time_hours == 1) {
+    }
+    else if ($bid_time_hours === 1) {
         return 'час назад';
-    } else if ($bid_time_hours > 1 && $bid_time_hours < 12) {
+    }
+    else if ($bid_time_hours > 1 && $bid_time_hours < 12) {
         return $bid_time_hours . ' ' . get_noun_plural_form($bid_time_hours, 'час назад', 'часа назад', 'часов назад');
-    } else {
+    }
+    else {
         return date_format(date_create($bid_time), 'Y-m-d в H:i');
     }
 }
-
 ?>
