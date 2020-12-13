@@ -1,6 +1,8 @@
-<?php require_once('helpers.php'); ?>
+<?php require_once('functions.php'); ?>
+
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title><?= $title ?></title>
@@ -8,10 +10,9 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/flatpickr.min.css" rel="stylesheet">
 </head>
+
 <body>
-
 <div class="page-wrapper">
-
     <header class="main-header">
         <div class="main-header__container container">
             <h1 class="visually-hidden">YetiCave</h1>
@@ -44,24 +45,22 @@
                 ?>
             </ul>
         </nav>
+
         <form class="form form--add-lot container form--invalid" name="add-lot" action="add.php" method="post"
               enctype="multipart/form-data">
-            <!-- form--invalid -->
             <h2>Добавление лота</h2>
             <div class="form__container-two">
-
                 <div class="form__item  <?= isset($errors['lot-name']) ? "form__item--invalid" : ""; ?>">
-                    <!-- form__item--invalid -->
                     <label for="lot-name">Наименование <sup>*</sup></label>
                     <input id="lot-name" type="text" name="lot-name" placeholder="Введите наименование лота"
-                           value="<?= getPostVal(htmlspecialchars('lot-name')); ?>">
+                           value="<?= htmlspecialchars(getPostVal('lot-name')); ?>">
                     <span class="form__error"><?= $errors['lot-name'] ?></span>
                 </div>
                 <div class="form__item <?= isset($errors['category']) ? "form__item--invalid" : ""; ?>">
                     <!-- form__item--invalid -->
                     <label for="category">Категория <sup>*</sup></label>
                     <select id="category" name="category"
-                            value="<?= getPostVal('category'); ?>">
+                            value="<?= htmlspecialchars(getPostVal('category')); ?>">
                         <option>Выберите категорию</option>
                         <?php foreach ($categories as $category) { ?>
                             <option><?= htmlspecialchars($category) ?></option>
@@ -88,14 +87,14 @@
             </div>
             <div class="form__container-three">
                 <div
-                    class="form__item form__item--small <?= isset($errors['lot-rate']) ? "form__item--invalid" : ""; ?>">
+                        class="form__item form__item--small <?= isset($errors['lot-rate']) ? "form__item--invalid" : ""; ?>">
                     <label for="lot-rate">Начальная цена <sup>*</sup></label>
                     <input id="lot-rate" type="int" name="lot-rate" placeholder="0"
                            value="<?= htmlspecialchars(getPostVal('lot-rate')); ?>">
                     <span class="form__error"><?= $errors['lot-rate'] ?></span>
                 </div>
                 <div
-                    class="form__item form__item--small <?= isset($errors['lot-step']) ? "form__item--invalid" : ""; ?>">
+                        class="form__item form__item--small <?= isset($errors['lot-step']) ? "form__item--invalid" : ""; ?>">
                     <label for="lot-step">Шаг ставки <sup>*</sup></label>
                     <input id="lot-step" type="int" name="lot-step" placeholder="0"
                            value="<?= htmlspecialchars(getPostVal('lot-step')); ?>">
@@ -111,13 +110,11 @@
             </div>
             <span class="form__error form__error--bottom"><?= $warning_about_errors ?></span>
             <button type="submit" class="button" name="submit_btn">Добавить лот</button>
-
         </form>
     </main>
-
 </div>
 
-<?php require_once 'footer.php'; ?>
+<?php require_once('footer.php'); ?>
 
 <script src="../flatpickr.js"></script>
 <script src="../script.js"></script>

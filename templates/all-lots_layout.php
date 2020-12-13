@@ -1,5 +1,6 @@
-<!DOCTYPE html>
 <?php require_once "init.php"; ?>
+
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -7,10 +8,9 @@
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
+
 <body>
-
 <div class="page-wrapper">
-
     <header class="main-header">
         <div class="main-header__container container">
             <h1 class="visually-hidden">YetiCave</h1>
@@ -24,13 +24,14 @@
             <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
             <nav class="user-menu">
                 <?php
-                if ($_SESSION['user']['name'] != null) { ?>
+                if ($user_name !== null) { ?>
                     <div class="user-menu__logged">
                         <p><?= htmlspecialchars($user_name) ?></p>
                         <a class="user-menu__bets" href="my-bets.php">Мои ставки</a>
                         <a class="user-menu__logout" href="logout.php">Выход</a>
                     </div>
-                <?php } else { ?>
+                <?php }
+                else { ?>
                     <ul class="user-menu__list">
                         <li class="user-menu__item">
                             <a href="sign-up.php">Регистрация</a>
@@ -56,9 +57,10 @@
         </nav>
         <div class="container">
             <section class="lots">
-                <h2>Все лоты в категории <span>"<?= htmlspecialchars($_GET['category']) ?>"</span></h2>
+                <h2>Все лоты в категории
+                    <span>"<?= htmlspecialchars(isset($_GET['category']) ? $_GET['category'] : ''); ?>"</span></h2>
                 <ul class="lots__list">
-                    <? foreach ($all_lots as $lot) { ?>
+                    <?php foreach ($all_lots as $lot) { ?>
 
                         <li class="lots__item lot">
                             <div class="lot__image">
@@ -75,7 +77,7 @@
                                     <div class="lot__rate">
                                         <span class="lot__amount">Стартовая цена</span>
                                         <span class="lot__cost"><?= htmlspecialchars($lot['init_price']) ?><b
-                                                class="rub">р</b></span>
+                                                    class="rub">р</b></span>
                                     </div>
                                     <?php
                                     remaining_time(htmlspecialchars($lot['final_date']));
@@ -89,16 +91,16 @@
             <?php if ($number_of_pages > 1) { ?>
                 <ul class="pagination-list">
                     <li class="pagination-item pagination-item-prev">
-                        <?php if ($_GET['page'] > 1) { ?>
+                        <?php if ($current_page > 1) { ?>
                         <a href="<?= htmlspecialchars(addOrUpdateUrlParam('page', $current_page - 1)); ?>">
                             Назад</a></li>
                     <?php } ?>
                     <?php foreach ($array_of_pages as $page) { ?>
-                        <li class="pagination-item <?= $current_page == $page ? 'pagination-item-active' : '' ?> ">
+                        <li class="pagination-item <?= $current_page === $page ? 'pagination-item-active' : '' ?> ">
                             <a href="<?= addOrUpdateUrlParam('page', $page) ?>"><?= $page ?></a></li>
                     <?php } ?>
                     <li class="pagination-item pagination-item-next">
-                        <?php if ($_GET['page'] < $number_of_pages) { ?>
+                        <?php if ($current_page < $number_of_pages) { ?>
                         <a href="<?= htmlspecialchars(addOrUpdateUrlParam('page', $current_page + 1)) ?>">Вперед</a>
                     </li>
                 <?php } ?>
@@ -106,10 +108,9 @@
             <?php } ?>
         </div>
     </main>
-
 </div>
 
-<?php require_once 'footer.php'; ?>
+<?php require_once('footer.php'); ?>
 
 </body>
 </html>

@@ -1,17 +1,17 @@
-<?php
-require_once('helpers.php');
-?>
+<?php require_once('functions.php'); ?>
+
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title><?= $title ?></title> <!-- Главная -->
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
+
 <body>
 <div class="page-wrapper">
-
     <header class="main-header">
         <div class="main-header__container container">
             <h1 class="visually-hidden">YetiCave</h1>
@@ -23,16 +23,16 @@ require_once('helpers.php');
                 <input class="main-header__search-btn" type="submit" name="find" value="Найти">
             </form>
             <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
-            <!-- здесь должен быть PHP код для показа меню и данных пользователя -->
             <nav class="user-menu">
                 <?php
-                if ($_SESSION['user']['name'] != null) { ?>
+                if ($user_name !== null) { ?>
                     <div class="user-menu__logged">
                         <p><?= htmlspecialchars($user_name) ?></p>
                         <a class="user-menu__bets" href="my-bets.php">Мои ставки</a>
                         <a class="user-menu__logout" href="logout.php">Выход</a>
                     </div>
-                <?php } else { ?>
+                <?php }
+                else { ?>
                     <ul class="user-menu__list">
                         <li class="user-menu__item">
                             <a href="sign-up.php">Регистрация</a>
@@ -50,8 +50,7 @@ require_once('helpers.php');
     </main>
 </div>
 
-<?php require_once 'footer.php'; ?>
-
+<?php require_once('footer.php'); ?>
 <script src="flatpickr.js"></script>
 <script src="script.js"></script>
 </body>

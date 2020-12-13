@@ -9,11 +9,13 @@
             ?>
         </ul>
     </nav>
+
     <div class="main-footer__bottom container">
         <div class="main-footer__copyright">
             <p>© 2019, YetiCave</p>
             <p>Интернет-аукцион сноубордического и горнолыжного снаряжения</p>
         </div>
+
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>
             <a class="social__link social__link--facebook" href="#">
@@ -52,7 +54,9 @@
                 </svg>
             </a>
         </div>
+
         <a class="main-footer__add-lot button" href="add.php">Добавить лот</a>
+
         <div class="main-footer__developed-by">
             <span class="visually-hidden">Разработано:</span>
             <a class="logo-academy" href="https://htmlacademy.ru/intensive/php">

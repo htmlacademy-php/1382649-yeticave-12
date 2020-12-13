@@ -1,18 +1,20 @@
-<?php require_once('helpers.php');
+<?php
+require_once('functions.php');
 require_once('db_connection.php');
 ?>
+
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title>Мои ставки</title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
+
 <body>
-
 <div class="page-wrapper">
-
     <header class="main-header">
         <div class="main-header__container container">
             <h1 class="visually-hidden">YetiCave</h1>
@@ -47,8 +49,9 @@ require_once('db_connection.php');
         <section class="rates container">
             <h2>Мои ставки</h2>
             <table class="rates__list">
-                <?php foreach ($user_bets as $user_bet) {
-                    $time_val = remaining_time_bet($user_bet['fin_data'], $user_bet['user_id'], $user_bet['lot_id'], $db_connection) ?>
+                <?php
+                foreach ($user_bets as $user_bet) {
+                    $time_val = remaining_time_bet($user_bet['fin_data'], $user_bet['user_id'], $user_bet['lot_id']) ?>
                     <tr class=" <?= htmlspecialchars($time_val['line_background_style']) ?>">
                         <td class="rates__info">
                             <div class="rates__img">
@@ -67,7 +70,7 @@ require_once('db_connection.php');
                         </td>
                         <td class="rates__timer">
                             <div
-                                class="<?= htmlspecialchars($time_val['column_background_style']) ?>">
+                                    class="<?= htmlspecialchars($time_val['column_background_style']) ?>">
                                 <?= htmlspecialchars($time_val['text']); ?></div>
                         </td>
                         <td class="rates__price">
@@ -77,11 +80,11 @@ require_once('db_connection.php');
                             <?= htmlspecialchars(bid_time($user_bet['bid_time'])); ?>
                         </td>
                     </tr>
-                <?php } ?>
+                    <?php
+                } ?>
             </table>
         </section>
     </main>
-
 </div>
 
 <?php require_once('footer.php'); ?>

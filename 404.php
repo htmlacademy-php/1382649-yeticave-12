@@ -1,15 +1,20 @@
+<?php
+require_once('init.php');
+require_once('db_connection.php');
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title>Error! Page not found!</title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
+
 <body>
-
 <div class="page-wrapper">
-
     <header class="main-header">
         <div class="main-header__container container">
             <h1 class="visually-hidden">YetiCave</h1>
@@ -24,10 +29,10 @@
             <nav class="user-menu">
                 <ul class="user-menu__list">
                     <li class="user-menu__item">
-                        <a href="sign-up.html">Регистрация</a>
+                        <a href="sign-up.php">Регистрация</a>
                     </li>
                     <li class="user-menu__item">
-                        <a href="login.html">Вход</a>
+                        <a href="login.php">Вход</a>
                     </li>
                 </ul>
             </nav>
@@ -35,14 +40,7 @@
     </header>
 
     <?php
-    // Connection with database
-    $db_connection = mysqli_connect('localhost', 'root', 'root', "yeticave");
-    mysqli_set_charset($db_connection, "utf8");
-    if ($db_connection == false) {
-        print("Ошибка подключения: " . mysqli_connect_error());
-    }
 
-    // Extract list of categories from database
     $sql_categories = "SELECT name FROM category;";
     $categories_result = mysqli_query($db_connection, $sql_categories);
     if (!$categories_result) {
@@ -72,8 +70,7 @@
     </main>
 </div>
 
-<?php require_once 'templates/footer.php'; ?>
+<?php require_once('templates/footer.php'); ?>
 
 </body>
 </html>
-

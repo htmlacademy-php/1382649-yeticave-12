@@ -6,18 +6,33 @@
         <?php
         foreach ($categories as $item) {
             $symbol = '';
-            if ($item == 'Доски и лыжи') {
+            if ($item === 'Доски и лыжи') {
                 $symbol = "boards";
-            } else if ($item == 'Крепления') {
-                $symbol = "attachment";
-            } else if ($item == 'Ботинки') {
-                $symbol = "boots";
-            } else if ($item == 'Одежда') {
-                $symbol = "clothing";
-            } else if ($item == 'Инструменты') {
-                $symbol = "tools";
-            } else if ($item == 'Разное') {
-                $symbol = "other";
+            }
+            else {
+                if ($item === 'Крепления') {
+                    $symbol = "attachment";
+                }
+                else {
+                    if ($item === 'Ботинки') {
+                        $symbol = "boots";
+                    }
+                    else {
+                        if ($item === 'Одежда') {
+                            $symbol = "clothing";
+                        }
+                        else {
+                            if ($item === 'Инструменты') {
+                                $symbol = "tools";
+                            }
+                            else {
+                                if ($item === 'Разное') {
+                                    $symbol = "other";
+                                }
+                            }
+                        }
+                    }
+                }
             }
             ?>
             <li class="promo__item promo__item--<?= $symbol ?>">
@@ -29,12 +44,12 @@
         ?>
     </ul>
 </section>
+
 <section class="lots">
     <div class="lots__header">
         <h2>Открытые лоты</h2>
     </div>
     <ul class="lots__list">
-        <!--заполните этот список из массива с товарами-->
         <?php
         foreach ($announces as $announce) {
             ?>
@@ -55,13 +70,14 @@
                             </span>
                         </div>
 
-                        <?php require_once('helpers.php');
+                        <?php require_once('functions.php');
                         $remaining_time = get_dt_range($announce['expiration_date']);
                         if ($remaining_time[0] >= '1') {
                             echo '<div class="lot__timer timer">';
                             echo $remaining_time[0] . ':' . $remaining_time[1];
                             echo '</div>';
-                        } else {
+                        }
+                        else {
                             echo '<div class="timer--finishing timer">';
                             echo $remaining_time[0] . ':' . $remaining_time[1];
                             echo '</div>';

@@ -1,11 +1,8 @@
 <?php
 require_once('helpers.php');
-
-$db_connection = mysqli_connect('localhost', 'root', 'root', 'yeticave');
-mysqli_set_charset($db_connection, "utf8");
-if ($db_connection == false) {
-    print("Ошибка подключения: " . mysqli_connect_error());
-}
+require_once('functions.php');
+require_once('db_connection.php');
+require_once('init.php');
 
 $sql_categories = mysqli_query($db_connection, "SELECT name FROM category");
 $categories = [];
@@ -13,10 +10,10 @@ while ($category = mysqli_fetch_array($sql_categories, MYSQLI_ASSOC)) {
     array_push($categories, $category['name']);
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+$errors = [];
+$warning_about_errors = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $required_fields = ['email', 'password', 'name', 'message'];
-    $errors = [];
-
     $rules = [
         'email' => function () use ($db_connection) {
             return validateEmail($_POST['email'], $db_connection);
@@ -39,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
     $errors = array_filter($errors);
-    $warning_about_errors = '';
+
     if (!empty($errors)) {
         $warning_about_errors = "Пожалуйста, исправьте ошибки в форме.";
     }
@@ -56,6 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-$layout = include_template('sign-up_layout.php', ['title' => 'Регистрация пользователя', 'categories' => $categories, 'errors' => $errors, 'warning_about_errors' => $warning_about_errors]);
+$layout = include_template('sign-up_layout.php', [
+    'title' => 'Регистрация пользователя',
+    'categories' => $categories,
+    'errors' => $errors,
+    'warning_about_errors' => $warning_about_errors
+]);
 print($layout);
 ?>
