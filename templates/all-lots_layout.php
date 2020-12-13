@@ -55,7 +55,8 @@
         </nav>
         <div class="container">
             <section class="lots">
-                <h2>Все лоты в категории <span>"<?= htmlspecialchars(isset($_GET['category'])?$_GET['category']:''); ?>"</span></h2>
+                <h2>Все лоты в категории
+                    <span>"<?= htmlspecialchars(isset($_GET['category']) ? $_GET['category'] : ''); ?>"</span></h2>
                 <ul class="lots__list">
                     <?php foreach ($all_lots as $lot) { ?>
 
@@ -74,7 +75,7 @@
                                     <div class="lot__rate">
                                         <span class="lot__amount">Стартовая цена</span>
                                         <span class="lot__cost"><?= htmlspecialchars($lot['init_price']) ?><b
-                                                class="rub">р</b></span>
+                                                    class="rub">р</b></span>
                                     </div>
                                     <?php
                                     remaining_time(htmlspecialchars($lot['final_date']));
@@ -88,7 +89,7 @@
             <?php if ($number_of_pages > 1) { ?>
                 <ul class="pagination-list">
                     <li class="pagination-item pagination-item-prev">
-                        <?php if (isset($_GET['page']) > 1) { ?>
+                        <?php if ($current_page > 1) { ?>
                         <a href="<?= htmlspecialchars(addOrUpdateUrlParam('page', $current_page - 1)); ?>">
                             Назад</a></li>
                     <?php } ?>
@@ -97,7 +98,7 @@
                             <a href="<?= addOrUpdateUrlParam('page', $page) ?>"><?= $page ?></a></li>
                     <?php } ?>
                     <li class="pagination-item pagination-item-next">
-                        <?php if (isset($_GET['page']) < $number_of_pages) { ?>
+                        <?php if ($current_page < $number_of_pages) { ?>
                         <a href="<?= htmlspecialchars(addOrUpdateUrlParam('page', $current_page + 1)) ?>">Вперед</a>
                     </li>
                 <?php } ?>

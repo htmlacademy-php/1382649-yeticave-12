@@ -70,13 +70,13 @@
                             <?= 'Срок действия лота истек' ?>
                         <?php } else { ?>
                             <div
-                                class="lot-item__timer"> <?= htmlspecialchars(remaining_time($expiration_date)) ?></div>
+                                    class="lot-item__timer"> <?= htmlspecialchars(remaining_time($expiration_date)) ?></div>
 
                             <div class="lot-item__cost-state">
                                 <div class="lot-item__rate">
                                     <span class="lot-item__amount">Текущая цена</span>
                                     <span class="lot-item__cost">
-                                    <?= $last_bid_value === 0 ? formatting_prices($init_price) : formatting_prices(htmlspecialchars($last_bid_value)); ?>
+                                    <?= $last_bid_value[0] === NULL ? formatting_prices($init_price) : formatting_prices(htmlspecialchars($last_bid_value)); ?>
                                 </span>
                                 </div>
 

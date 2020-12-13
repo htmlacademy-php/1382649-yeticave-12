@@ -20,7 +20,7 @@ require_once('functions.php'); ?>
             </a>
             <form class="main-header__search" method="get" action="search.php" autocomplete="off">
                 <input type="search" name="search" placeholder="Поиск лота"
-                       value="<?= htmlspecialchars(isset($_GET['search'])?$_GET['search']:''); ?>">
+                       value="<?= htmlspecialchars(isset($_GET['search']) ? $_GET['search'] : ''); ?>">
                 <input class="main-header__search-btn" type="submit" name="find" value="Найти">
             </form>
             <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
@@ -78,7 +78,7 @@ require_once('functions.php'); ?>
                                     <div class="lot__rate">
                                         <span class="lot__amount">Стартовая цена</span>
                                         <span class="lot__cost"><?= htmlspecialchars($lot['lot_init_price']) ?><b
-                                                class="rub">р</b></span>
+                                                    class="rub">р</b></span>
                                     </div>
                                     <div>
                                         <?php $remaining_time = get_dt_range($lot['lot_final_date']);
@@ -104,8 +104,9 @@ require_once('functions.php'); ?>
                 if ($number_of_pages > 1) { ?>
                     <ul class="pagination-list">
                         <li class="pagination-item pagination-item-prev">
-                            <?php if ($_GET['page'] > 1) { ?>
-                                <a href="<?= htmlspecialchars(addOrUpdateUrlParam('page', $curent_page - 1)); ?>">Назад</a>
+                            <?php if ($curent_page > 1 ) { ?>
+                                <a href="<?= htmlspecialchars(addOrUpdateUrlParam('page',
+                                    $curent_page - 1)); ?>">Назад</a>
                             <?php } ?>
                         </li>
 
@@ -117,7 +118,7 @@ require_once('functions.php'); ?>
                         <?php } ?>
 
                         <li class="pagination-item pagination-item-next">
-                            <?php if ($_GET['page'] < $number_of_pages) { ?>
+                            <?php if ($curent_page < $number_of_pages) { ?>
                             <a href="<?= htmlspecialchars(addOrUpdateUrlParam('page', $curent_page + 1)) ?>">Вперед</a>
                         </li>
                     <?php } ?>

@@ -23,6 +23,9 @@ WHERE bid.user_id=" . $_SESSION['user']['id'];
 }
 
 $user_name = isset($_SESSION['user']['name']) ? $_SESSION['user']['name'] : null;
-$content = include_template('my-bets_layout.php', ['categories' => $categories, 'username' => $user_name,
-    'user_bets' => $user_bets]);
+$content = include_template('my-bets_layout.php', [
+    'categories' => $categories,
+    'username' => $user_name,
+    'user_bets' => $user_bets
+]);
 print($content);

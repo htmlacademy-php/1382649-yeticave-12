@@ -2,7 +2,7 @@
 require_once('helpers.php');
 require_once('functions.php');
 require_once('init.php');
-require_once ('db_connection.php');
+require_once('db_connection.php');
 mysqli_set_charset($db_connection, 'utf8');
 if ($db_connection === false) {
     print("Ошибка подключения: " . mysqli_connect_error());
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $errors['password'] = 'Неверный пароль';
         }
     }
-    if($_POST['email']!==$user['email']) {
+    if ($_POST['email'] !== $user['email']) {
         $errors['email'] = 'Такой пользователь не найден';
     }
 

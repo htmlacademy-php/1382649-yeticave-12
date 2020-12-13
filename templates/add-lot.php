@@ -87,14 +87,14 @@ require_once('functions.php'); ?>
             </div>
             <div class="form__container-three">
                 <div
-                    class="form__item form__item--small <?= isset($errors['lot-rate']) ? "form__item--invalid" : ""; ?>">
+                        class="form__item form__item--small <?= isset($errors['lot-rate']) ? "form__item--invalid" : ""; ?>">
                     <label for="lot-rate">Начальная цена <sup>*</sup></label>
                     <input id="lot-rate" type="int" name="lot-rate" placeholder="0"
                            value="<?= htmlspecialchars(getPostVal('lot-rate')); ?>">
                     <span class="form__error"><?= $errors['lot-rate'] ?></span>
                 </div>
                 <div
-                    class="form__item form__item--small <?= isset($errors['lot-step']) ? "form__item--invalid" : ""; ?>">
+                        class="form__item form__item--small <?= isset($errors['lot-step']) ? "form__item--invalid" : ""; ?>">
                     <label for="lot-step">Шаг ставки <sup>*</sup></label>
                     <input id="lot-step" type="int" name="lot-step" placeholder="0"
                            value="<?= htmlspecialchars(getPostVal('lot-step')); ?>">

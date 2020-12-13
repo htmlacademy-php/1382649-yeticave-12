@@ -8,16 +8,26 @@
             $symbol = '';
             if ($item === 'Доски и лыжи') {
                 $symbol = "boards";
-            } else if ($item === 'Крепления') {
-                $symbol = "attachment";
-            } else if ($item === 'Ботинки') {
-                $symbol = "boots";
-            } else if ($item === 'Одежда') {
-                $symbol = "clothing";
-            } else if ($item === 'Инструменты') {
-                $symbol = "tools";
-            } else if ($item === 'Разное') {
-                $symbol = "other";
+            } else {
+                if ($item === 'Крепления') {
+                    $symbol = "attachment";
+                } else {
+                    if ($item === 'Ботинки') {
+                        $symbol = "boots";
+                    } else {
+                        if ($item === 'Одежда') {
+                            $symbol = "clothing";
+                        } else {
+                            if ($item === 'Инструменты') {
+                                $symbol = "tools";
+                            } else {
+                                if ($item === 'Разное') {
+                                    $symbol = "other";
+                                }
+                            }
+                        }
+                    }
+                }
             }
             ?>
             <li class="promo__item promo__item--<?= $symbol ?>">

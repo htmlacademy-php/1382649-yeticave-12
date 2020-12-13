@@ -69,7 +69,7 @@ require_once('db_connection.php');
                         </td>
                         <td class="rates__timer">
                             <div
-                                class="<?= htmlspecialchars($time_val['column_background_style']) ?>">
+                                    class="<?= htmlspecialchars($time_val['column_background_style']) ?>">
                                 <?= htmlspecialchars($time_val['text']); ?></div>
                         </td>
                         <td class="rates__price">
