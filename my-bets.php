@@ -3,10 +3,12 @@ require_once('init.php');
 require_once('helpers.php');
 require_once('functions.php');
 require_once('db_connection.php');
+
 $sql_category = "SELECT name FROM category;";
 $sql_category_query = mysqli_query($db_connection, $sql_category);
 $categories = [];
 $user_bets = [];
+
 while ($category = mysqli_fetch_array($sql_category_query, MYSQLI_ASSOC)) {
     array_push($categories, $category['name']);
 }
@@ -29,3 +31,4 @@ $content = include_template('my-bets_layout.php', [
     'user_bets' => $user_bets
 ]);
 print($content);
+?>

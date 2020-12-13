@@ -29,7 +29,8 @@
                         <a class="user-menu__bets" href="my-bets.php">Мои ставки</a>
                         <a class="user-menu__logout" href="logout.php">Выход</a>
                     </div>
-                <?php } else { ?>
+                <?php }
+                else { ?>
                     <ul class="user-menu__list">
                         <li class="user-menu__item">
                             <a href="sign-up.php">Регистрация</a>
@@ -68,7 +69,8 @@
                     <div class="lot-item__state">
                         <?php if (strtotime($expiration_date) < strtotime('now')) { ?>
                             <?= 'Срок действия лота истек' ?>
-                        <?php } else { ?>
+                        <?php }
+                        else { ?>
                             <div
                                     class="lot-item__timer"> <?= htmlspecialchars(remaining_time($expiration_date)) ?></div>
 
@@ -117,7 +119,7 @@
     </main>
 </div>
 
-<?php require_once 'footer.php'; ?>
+<?php require_once('footer.php'); ?>
 
 </body>
 </html>

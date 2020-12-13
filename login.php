@@ -3,10 +3,6 @@ require_once('helpers.php');
 require_once('functions.php');
 require_once('init.php');
 require_once('db_connection.php');
-mysqli_set_charset($db_connection, 'utf8');
-if ($db_connection === false) {
-    print("Ошибка подключения: " . mysqli_connect_error());
-}
 
 $sql_categorie_query = mysqli_query($db_connection, "SELECT name FROM category");
 $categories = [];
@@ -40,7 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (count($errors) === 0 && $user) {
         if (password_verify($_POST['password'], $user['password'])) {
             $_SESSION['user'] = $user;
-        } else {
+        }
+        else {
             $errors['password'] = 'Неверный пароль';
         }
     }

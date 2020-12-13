@@ -1,5 +1,5 @@
-<?php
-require_once('functions.php'); ?>
+<?php require_once('functions.php'); ?>
+
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -32,7 +32,8 @@ require_once('functions.php'); ?>
                         <a class="user-menu__bets" href="my-bets.php">Мои ставки</a>
                         <a class="user-menu__logout" href="logout.php">Выход</a>
                     </div>
-                <?php } else { ?>
+                <?php }
+                else { ?>
                     <ul class="user-menu__list">
                         <li class="user-menu__item">
                             <a href="sign-up.php">Регистрация</a>
@@ -60,7 +61,8 @@ require_once('functions.php'); ?>
             <section class="lots">
                 <?php if (empty($search_result)) {
                     echo '<h2>' . $search_error . '</h2>';
-                } else { ?>
+                }
+                else { ?>
                 <h2>Результаты поиска по запросу «<span><?= htmlspecialchars($_GET['search']) ?></span>»</h2>
                 <ul class="lots__list">
                     <?php foreach ($search_result as $lot) { ?>
@@ -86,7 +88,8 @@ require_once('functions.php'); ?>
                                             echo '<div class ="lot__timer timer">';
                                             echo $remaining_time[0] . ':' . $remaining_time[1];
                                             echo '</div>';
-                                        } else {
+                                        }
+                                        else {
                                             echo '<div class="timer--finishing timer">';
                                             echo $remaining_time[0] . ':' . $remaining_time[1];
                                             echo '</div>';
@@ -130,7 +133,7 @@ require_once('functions.php'); ?>
     </main>
 </div>
 
-<?php require_once 'footer.php'; ?>
+<?php require_once ('footer.php'); ?>
 
 </body>
 </html>

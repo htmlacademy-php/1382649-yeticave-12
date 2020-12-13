@@ -1,5 +1,6 @@
-<!DOCTYPE html>
 <?php require_once "init.php"; ?>
+
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -29,7 +30,8 @@
                         <a class="user-menu__bets" href="my-bets.php">Мои ставки</a>
                         <a class="user-menu__logout" href="logout.php">Выход</a>
                     </div>
-                <?php } else { ?>
+                <?php }
+                else { ?>
                     <ul class="user-menu__list">
                         <li class="user-menu__item">
                             <a href="sign-up.php">Регистрация</a>
@@ -108,7 +110,7 @@
     </main>
 </div>
 
-<?php require_once 'footer.php'; ?>
+<?php require_once('footer.php'); ?>
 
 </body>
 </html>

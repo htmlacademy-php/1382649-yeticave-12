@@ -1,8 +1,9 @@
 <?php
-require_once "helpers.php";
+require_once('helpers.php');
 require_once('functions.php');
-require_once "init.php";
-require_once "db_connection.php";
+require_once('init.php');
+require_once('db_connection.php');
+
 $sql_categories = mysqli_query($db_connection, "SELECT name FROM category;");
 $categories = [];
 while ($category = mysqli_fetch_array($sql_categories, MYSQLI_ASSOC)) {
@@ -50,9 +51,11 @@ WHERE MATCH(lot.name, lot.description) AGAINST('" . mysqli_real_escape_string($d
         $sql_lot_query = mysqli_query($db_connection, $sql_lot);
         $search_result = mysqli_fetch_all($sql_lot_query, MYSQLI_ASSOC);
     }
-} else {
+}
+else {
     $search_error = "Введите ключевое слово для поиска";
 }
+
 $user_name = isset($_SESSION['user']['name']) ? $_SESSION['user']['name'] : null;
 $layout = include_template('search_layout.php', [
     'categories' => $categories,

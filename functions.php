@@ -1,5 +1,4 @@
 <?php
-
 require_once('db_connection.php');
 
 /**
@@ -52,7 +51,8 @@ function remaining_time($expiration_date)
         echo '<div class="lot__timer timer">';
         echo $remaining_time[0] . ':' . $remaining_time[1];
         echo '</div>';
-    } else {
+    }
+    else {
         echo '<div class="timer--finishing timer">';
         echo $remaining_time[0] . ':' . $remaining_time[1];
         echo '</div>';
@@ -242,7 +242,7 @@ function validateEmail($email, $db_connection)
         return 'Вы ввели неправильный адрес электронной почты';
     }
 
-    $sql_compare_email = "SELECT email FROM user WHERE email ='" . mysqli_real_escape_string($sanitized_email) . "';";
+    $sql_compare_email = "SELECT email FROM user WHERE email ='" . mysqli_real_escape_string($db_connection, $sanitized_email) . "';";
     $sql_compare_email_query = mysqli_query($db_connection, $sql_compare_email);
     $sql_email_comparation_result = mysqli_fetch_array($sql_compare_email_query, MYSQLI_NUM);
     if ($sql_email_comparation_result !== null) {
@@ -263,7 +263,8 @@ function validatePassword($password)
 {
     if (strlen($password) === 0) {
         return "Введите пароль";
-    } else {
+    }
+    else {
         if (strlen($password) < 8) {
             return "Пароль должен иметь минимум 8 символов";
         }
@@ -398,19 +399,22 @@ function remaining_time_bet($expiration_time, $user_id, $user_lot)
             'rates__item rates__item--win',
             'timer timer--win',
             'Ставка выиграла', 'Телефон +7 900 667-84-48, Скайп: Vlas92. Звонить с 14 до 20');
-    } else {
+    }
+    else {
         if ($time[0] > 24) {
             return remaining_time_bet_array_values(
                 'rates__item',
                 'timer',
                 $time[0] . ':' . $time[1], '');
-        } else {
+        }
+        else {
             if ($time[0] < 0) {
                 return remaining_time_bet_array_values(
                     'rates__item rates__item--end',
                     'timer timer--end',
                     'Торги окончены', '');
-            } else {
+            }
+            else {
                 if ($time[0] <= 24) {
                     return remaining_time_bet_array_values(
                         'rates__item',
@@ -461,14 +465,17 @@ function bid_time($bid_time)
     if ($bid_time_hours === 0 && ($bid_time_minutes >= 0 || ($bid_time_minutes < 60))) {
         return $bid_time_minutes . ' ' . get_noun_plural_form($bid_time_minutes, 'минута назад', 'минуты назад',
                 'минут назад');
-    } else {
+    }
+    else {
         if ($bid_time_hours === 1) {
             return 'час назад';
-        } else {
+        }
+        else {
             if ($bid_time_hours > 1 && $bid_time_hours < 12) {
                 return $bid_time_hours . ' ' . get_noun_plural_form($bid_time_hours, 'час назад', 'часа назад',
                         'часов назад');
-            } else {
+            }
+            else {
                 return date_format(date_create($bid_time), 'Y-m-d в H:i');
             }
         }

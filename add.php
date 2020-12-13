@@ -2,6 +2,7 @@
 require_once("helpers.php");
 require_once('functions.php');
 require_once("init.php");
+
 $user_name = isset($_SESSION['user']['name']) ? $_SESSION['user']['name'] : null;
 if ($user_name === null) {
     header('HTTP/1.0 403 Forbidden');
@@ -100,6 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die();
     }
 }
+
 $user_name = isset($_SESSION['user']['name']) ? $_SESSION['user']['name'] : null;
 $layout = include_template('add-lot.php', [
     'title' => 'Добавление лота',

@@ -3,6 +3,7 @@ require_once('helpers.php');
 require_once('functions.php');
 require_once('db_connection.php');
 require_once('init.php');
+
 $sql_categories = mysqli_query($db_connection, "SELECT name FROM category");
 $categories = [];
 while ($category = mysqli_fetch_array($sql_categories, MYSQLI_ASSOC)) {

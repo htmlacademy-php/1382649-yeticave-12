@@ -1,5 +1,5 @@
-<?php
-require_once('functions.php'); ?>
+<?php require_once('functions.php'); ?>
+
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -79,7 +79,7 @@ require_once('functions.php'); ?>
     </main>
 </div>
 
-<?php require_once 'footer.php'; ?>
+<?php require_once('footer.php'); ?>
 
 </body>
 </html>

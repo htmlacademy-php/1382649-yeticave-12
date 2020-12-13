@@ -4,6 +4,7 @@ require_once('functions.php');
 require_once('init.php');
 require_once('getwinner.php');
 require_once('db_connection.php');
+
 $sql_categories = "SELECT name FROM category;";
 $categories_result = mysqli_query($db_connection, $sql_categories);
 if (!$categories_result) {

@@ -8,19 +8,24 @@
             $symbol = '';
             if ($item === 'Доски и лыжи') {
                 $symbol = "boards";
-            } else {
+            }
+            else {
                 if ($item === 'Крепления') {
                     $symbol = "attachment";
-                } else {
+                }
+                else {
                     if ($item === 'Ботинки') {
                         $symbol = "boots";
-                    } else {
+                    }
+                    else {
                         if ($item === 'Одежда') {
                             $symbol = "clothing";
-                        } else {
+                        }
+                        else {
                             if ($item === 'Инструменты') {
                                 $symbol = "tools";
-                            } else {
+                            }
+                            else {
                                 if ($item === 'Разное') {
                                     $symbol = "other";
                                 }
@@ -71,7 +76,8 @@
                             echo '<div class="lot__timer timer">';
                             echo $remaining_time[0] . ':' . $remaining_time[1];
                             echo '</div>';
-                        } else {
+                        }
+                        else {
                             echo '<div class="timer--finishing timer">';
                             echo $remaining_time[0] . ':' . $remaining_time[1];
                             echo '</div>';

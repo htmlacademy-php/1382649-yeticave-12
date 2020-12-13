@@ -7,6 +7,7 @@ require_once('db_connection.php');
 if (!isset($_GET['id'])) {
     return404();
 }
+
 $id = intval($_GET['id']);
 $sql_id = "SELECT id FROM lot WHERE id=" . $id;
 $sql_id_query = mysqli_query($db_connection, $sql_id);
@@ -47,7 +48,7 @@ $sql_last_bid = "SELECT MAX(bid_value) AS max_bid_value FROM bid WHERE lot_id = 
         $_GET['id']);
 $sql_last_bid_query = mysqli_query($db_connection, $sql_last_bid);
 $last_bid_value = mysqli_fetch_array($sql_last_bid_query);
-if ($last_bid_value[0] === NULL) {
+if ($last_bid_value[0] === null) {
     $min_bid_value = $lot['lot_init_price'];
 }
 else {
@@ -58,10 +59,12 @@ $error = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($_POST['cost'] < $min_bid_value) {
         $error = 'Мин. ставка должно быть ' . $min_bid_value . ' p';
-    } else {
+    }
+    else {
         if (empty($_POST['cost'])) {
             $error = 'Введите ставку';
-        } else {
+        }
+        else {
             $sql_insert_new_bid = "INSERT INTO bid (user_id, lot_id, bid_value, bid_time)
 VALUES ('" . mysqli_real_escape_string($db_connection,
                     $_SESSION['user']['id']) . "', '" . mysqli_real_escape_string($db_connection, $_GET['id']) .
@@ -72,6 +75,7 @@ VALUES ('" . mysqli_real_escape_string($db_connection,
         }
     }
 }
+
 $expired_lot = 'Истекший лот';
 $user_name = isset($_SESSION['user']['name']) ? $_SESSION['user']['name'] : null;
 $lot_layout = include_template('lot_layout.php', [
@@ -92,3 +96,4 @@ $lot_layout = include_template('lot_layout.php', [
     'error' => $error
 ]);
 echo $lot_layout;
+?>

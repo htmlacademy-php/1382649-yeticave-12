@@ -2,8 +2,10 @@
 require_once('init.php');
 require_once('db_connection.php');
 ?>
+
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title>Error! Page not found!</title>
@@ -68,8 +70,7 @@ require_once('db_connection.php');
     </main>
 </div>
 
-<?php require_once 'templates/footer.php'; ?>
+<?php require_once('templates/footer.php'); ?>
 
 </body>
 </html>
-
