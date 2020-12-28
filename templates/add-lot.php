@@ -57,7 +57,6 @@
                     <span class="form__error"><?= $errors['lot-name'] ?></span>
                 </div>
                 <div class="form__item <?= isset($errors['category']) ? "form__item--invalid" : ""; ?>">
-                    <!-- form__item--invalid -->
                     <label for="category">Категория <sup>*</sup></label>
                     <select id="category" name="category"
                             value="<?= htmlspecialchars(getPostVal('category')); ?>">

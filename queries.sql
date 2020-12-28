@@ -73,3 +73,6 @@ FROM bid
 WHERE lot.id = 1
 ORDER BY bid_time DESC;
 
+ALTER TABLE lot DROP user_lot;
+
+ALTER TABLE lot ADD user_lot_id INT NOT NULL AFTER closed;

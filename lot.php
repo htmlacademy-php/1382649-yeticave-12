@@ -26,7 +26,7 @@ while ($category = mysqli_fetch_array($sql_category_query, MYSQLI_ASSOC)) {
 
 $sql_lot = "SELECT lot.name as lot_name, lot.step as lot_step, lot.description as lot_description, lot.init_price as lot_init_price, lot.final_date as lot_final_date,
 bid.bid_value as lot_bid_value, user.name as bid_username, bid.bid_time as bid_time_insert, category.name as lot_category,
-lot_img.image_url as lot_image_url, user_lot FROM lot
+lot_img.image_url as lot_image_url, user_lot_id FROM lot
 LEFT JOIN bid ON lot.id = bid.lot_id
 LEFT JOIN lot_img ON lot.id = lot_img.lot_id
 LEFT JOIN user ON  user.id = bid.user_id
@@ -78,6 +78,7 @@ VALUES ('" . mysqli_real_escape_string($db_connection,
 
 $expired_lot = 'Истекший лот';
 $user_name = isset($_SESSION['user']['name']) ? $_SESSION['user']['name'] : null;
+$user_id = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
 $lot_layout = include_template('lot_layout.php', [
     'categories' => $categories,
     'lot_name' => $lot['lot_name'],
@@ -87,10 +88,11 @@ $lot_layout = include_template('lot_layout.php', [
     'init_price' => $lot['lot_init_price'],
     'bid_value' => $lot['lot_bid_value'],
     'expiration_date' => $lot['lot_final_date'],
-    'user_lot' => $lot['user_lot'],
+    'user_lot_id' => $lot['user_lot_id'],
     'bids' => $bids,
     'bids_count' => $count,
     'user_name' => $user_name,
+    "user_id"=> $user_id,
     'last_bid_value' => $last_bid_value[0],
     'min_bid_value' => $min_bid_value,
     'error' => $error
