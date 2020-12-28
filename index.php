@@ -10,6 +10,7 @@ $categories_result = mysqli_query($db_connection, $sql_categories);
 if (!$categories_result) {
     $error = mysqli_error($db_connection);
     print("Ошибка MySQL: " . $error);
+    die();
 }
 $categories = [];
 while ($category = mysqli_fetch_array($categories_result, MYSQLI_ASSOC)) {
@@ -27,6 +28,7 @@ $lots_result = mysqli_query($db_connection, $sql_lots);
 if (!$lots_result) {
     $error = mysqli_error($db_connection);
     print("Ошибка MySQL: " . $error);
+    die();
 }
 
 $user_name = isset($_SESSION['user']['name']) ? $_SESSION['user']['name'] : null;
