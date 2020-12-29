@@ -62,8 +62,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $errors = array_filter($errors);
 
-    $sql_selected_category = "SELECT id FROM category WHERE name ='" . mysqli_real_escape_string($db_connection,
-            $_POST['category']) . '\'';
+    $sql_selected_category = "SELECT id FROM category WHERE name ='" . mysqli_real_escape_string(
+        $db_connection,
+        $_POST['category']
+    ) . '\'';
     $selected_category_query = mysqli_query($db_connection, $sql_selected_category);
     $selected_category = mysqli_fetch_array($selected_category_query, MYSQLI_ASSOC);
     $category_id = $selected_category['id'];
@@ -75,12 +77,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $safe_lot_rate = mysqli_real_escape_string($db_connection, $_POST['lot-rate']);
         $safe_lot_step = mysqli_real_escape_string($db_connection, $_POST['lot-step']);
         $safe_lot_date = mysqli_real_escape_string($db_connection, $_POST['lot-date']);
-        $safe_lot_user = mysqli_real_escape_string($db_connection, $_SESSION['user']['name']);
+        $safe_lot_user = mysqli_real_escape_string($db_connection, $_SESSION['user']['id']);
         $status = 0;
 
-        $sql_lot_insert = "INSERT INTO lot (name, category_id, description, init_price, step, final_date,
-                 user_lot, closed) VALUES ('" . $safe_lot_name . "', " . "'" . $safe_category_id . "', '" . $safe_message . "', '" .
-            $safe_lot_rate . "', '" . $safe_lot_step . "', '" . $safe_lot_date . "', '" . $safe_lot_user . "', $status);";
+        $sql_lot_insert = "INSERT INTO lot (name, category_id, description, init_price, step, final_date, closed, user_lot_id) VALUES ('" . $safe_lot_name . "', " . "'" . $safe_category_id . "', '" . $safe_message . "', '" .
+            $safe_lot_rate . "', '" . $safe_lot_step . "', '" . $safe_lot_date . "', '"  .  $status ."','". $safe_lot_user ."');";
 
         $sql_lot_insert_query = mysqli_query($db_connection, $sql_lot_insert);
         $last_id = mysqli_insert_id($db_connection);
@@ -97,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($errors)) {
             $warning_about_errors = "Пожалуйста, исправьте ошибки в форме";
         }
-        header('Location:/lot.php?id=' . $last_id);
+        header('Location:/lot.php?category='.$_POST['category'].'&id=' . $last_id);
         die();
     }
 }
@@ -111,4 +112,3 @@ $layout = include_template('add-lot.php', [
     'warning_about_errors' => $warning_about_errors
 ]);
 print $layout;
-?>

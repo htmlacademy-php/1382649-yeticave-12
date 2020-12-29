@@ -32,8 +32,7 @@
                         <a class="user-menu__bets" href="my-bets.php">Мои ставки</a>
                         <a class="user-menu__logout" href="logout.php">Выход</a>
                     </div>
-                <?php }
-                else { ?>
+                <?php } else { ?>
                     <ul class="user-menu__list">
                         <li class="user-menu__item">
                             <a href="sign-up.php">Регистрация</a>
@@ -61,8 +60,7 @@
             <section class="lots">
                 <?php if (empty($search_result)) {
                     echo '<h2>' . $search_error . '</h2>';
-                }
-                else { ?>
+                } else { ?>
                 <h2>Результаты поиска по запросу «<span><?= htmlspecialchars($_GET['search']) ?></span>»</h2>
                 <ul class="lots__list">
                     <?php foreach ($search_result as $lot) { ?>
@@ -88,8 +86,7 @@
                                             echo '<div class ="lot__timer timer">';
                                             echo $remaining_time[0] . ':' . $remaining_time[1];
                                             echo '</div>';
-                                        }
-                                        else {
+                                        } else {
                                             echo '<div class="timer--finishing timer">';
                                             echo $remaining_time[0] . ':' . $remaining_time[1];
                                             echo '</div>';
@@ -104,18 +101,22 @@
             </section>
 
             <?php if ($search_result !== null) {
-                if ($number_of_pages > 1) { ?>
+                        if ($number_of_pages > 1) { ?>
                     <ul class="pagination-list">
                         <li class="pagination-item pagination-item-prev">
-                            <?php if ($curent_page > 1 ) { ?>
-                                <a href="<?= htmlspecialchars(addOrUpdateUrlParam('page',
-                                    $curent_page - 1)); ?>">Назад</a>
+                            <?php if ($curent_page > 1) { ?>
+                                <a href="<?= htmlspecialchars(addOrUpdateUrlParam(
+                            'page',
+                            $curent_page - 1
+                        )); ?>">Назад</a>
                             <?php } ?>
                         </li>
 
                         <?php foreach ($pages as $page) { ?>
                             <?php $current_url = $_SERVER['REQUEST_URI']; ?>
-                            <li class="pagination-item <?php if ($page === $curent_page) echo 'pagination-item-active' ?>">
+                            <li class="pagination-item <?php if ($page === $curent_page) {
+                                        echo 'pagination-item-active';
+                                    } ?>">
                                 <a href="<?= htmlspecialchars(addOrUpdateUrlParam('page', $page)) ?>"><?= $page ?></a>
                             </li>
                         <?php } ?>
@@ -128,12 +129,12 @@
                     </ul>
                     <?php
                 }
-            } ?>
+                    } ?>
         </div>
     </main>
 </div>
 
-<?php require_once ('footer.php'); ?>
+<?php require_once('footer.php'); ?>
 
 </body>
 </html>

@@ -29,8 +29,7 @@
                         <a class="user-menu__bets" href="my-bets.php">Мои ставки</a>
                         <a class="user-menu__logout" href="logout.php">Выход</a>
                     </div>
-                <?php }
-                else { ?>
+                <?php } else { ?>
                     <ul class="user-menu__list">
                         <li class="user-menu__item">
                             <a href="sign-up.php">Регистрация</a>
@@ -51,7 +50,8 @@
                     <li class="nav__item">
                         <a href="all-lots.php?category=<?= $category; ?>"><?= htmlspecialchars($category) ?></a>
                     </li>
-                <?php } ?>
+                <?php
+                } ?>
             </ul>
         </nav>
         <section class="lot-item container">
@@ -69,8 +69,7 @@
                     <div class="lot-item__state">
                         <?php if (strtotime($expiration_date) < strtotime('now')) { ?>
                             <?= 'Срок действия лота истек' ?>
-                        <?php }
-                        else { ?>
+                        <?php } else { ?>
                             <div
                                     class="lot-item__timer"> <?= htmlspecialchars(remaining_time($expiration_date)) ?></div>
 
@@ -78,7 +77,7 @@
                                 <div class="lot-item__rate">
                                     <span class="lot-item__amount">Текущая цена</span>
                                     <span class="lot-item__cost">
-                                    <?= $last_bid_value[0] === NULL ? formatting_prices($init_price) : formatting_prices(htmlspecialchars($last_bid_value)); ?>
+                                    <?= isset($last_bid_value) ? formatting_prices(htmlspecialchars($last_bid_value)) : formatting_prices($init_price) ?>
                                 </span>
                                 </div>
 
@@ -86,7 +85,7 @@
                                     Мин. ставка <span><?= htmlspecialchars($min_bid_value . ' р') ?></span>
                                 </div>
                             </div>
-                            <?php if ($user_name !== null && $user_name !== $user_lot) { ?>
+                            <?php if ($user_id !== null && $user_id !== $user_lot_id) { ?>
                                 <form class="lot-item__form" action="lot.php?id=<?= $_GET['id'] ?>" method="post"
                                       autocomplete="off">
                                     <p class="lot-item__form-item <?= isset($error) ? 'form__item form__item--invalid' : '' ?> ">

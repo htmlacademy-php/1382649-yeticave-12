@@ -51,8 +51,7 @@ function remaining_time($expiration_date)
         echo '<div class="lot__timer timer">';
         echo $remaining_time[0] . ':' . $remaining_time[1];
         echo '</div>';
-    }
-    else {
+    } else {
         echo '<div class="timer--finishing timer">';
         echo $remaining_time[0] . ':' . $remaining_time[1];
         echo '</div>';
@@ -264,10 +263,8 @@ function validatePassword($password)
     if (strlen($password) === 0) {
         return "Введите пароль";
     }
-    else {
-        if (strlen($password) < 8) {
-            return "Пароль должен иметь минимум 8 символов";
-        }
+    if (strlen($password) < 8) {
+        return "Пароль должен иметь минимум 8 символов";
     }
 }
 
@@ -398,31 +395,33 @@ function remaining_time_bet($expiration_time, $user_id, $user_lot)
         return remaining_time_bet_array_values(
             'rates__item rates__item--win',
             'timer timer--win',
-            'Ставка выиграла', 'Телефон +7 900 667-84-48, Скайп: Vlas92. Звонить с 14 до 20');
+            'Ставка выиграла',
+            'Телефон +7 900 667-84-48, Скайп: Vlas92. Звонить с 14 до 20'
+        );
     }
-    else {
-        if ($time[0] > 24) {
-            return remaining_time_bet_array_values(
-                'rates__item',
-                'timer',
-                $time[0] . ':' . $time[1], '');
-        }
-        else {
-            if ($time[0] < 0) {
-                return remaining_time_bet_array_values(
-                    'rates__item rates__item--end',
-                    'timer timer--end',
-                    'Торги окончены', '');
-            }
-            else {
-                if ($time[0] <= 24) {
-                    return remaining_time_bet_array_values(
-                        'rates__item',
-                        'timer timer--finishing',
-                        $time[0] . ':' . $time[1], '');
-                }
-            }
-        }
+    if ($time[0] > 24) {
+        return remaining_time_bet_array_values(
+            'rates__item',
+            'timer',
+            $time[0] . ':' . $time[1],
+            ''
+        );
+    }
+    if ($time[0] < 0) {
+        return remaining_time_bet_array_values(
+            'rates__item rates__item--end',
+            'timer timer--end',
+            'Торги окончены',
+            ''
+        );
+    }
+    if ($time[0] <= 24) {
+        return remaining_time_bet_array_values(
+            'rates__item',
+            'timer timer--finishing',
+            $time[0] . ':' . $time[1],
+            ''
+        );
     }
 }
 
@@ -463,23 +462,18 @@ function bid_time($bid_time)
     $bid_time_minutes = ceil($bid_time_strtotime / 60);
     $bid_time_hours = floor($bid_time_strtotime / 3600);
     if ($bid_time_hours === 0 && ($bid_time_minutes >= 0 || ($bid_time_minutes < 60))) {
-        return $bid_time_minutes . ' ' . get_noun_plural_form($bid_time_minutes, 'минута назад', 'минуты назад',
-                'минут назад');
+        return $bid_time_minutes . ' ' . get_noun_plural_form(
+            $bid_time_minutes,
+            'минута назад',
+            'минуты назад',
+            'минут назад'
+        );
     }
-    else {
-        if ($bid_time_hours === 1) {
-            return 'час назад';
-        }
-        else {
-            if ($bid_time_hours > 1 && $bid_time_hours < 12) {
-                return $bid_time_hours . ' ' . get_noun_plural_form($bid_time_hours, 'час назад', 'часа назад',
-                        'часов назад');
-            }
-            else {
-                return date_format(date_create($bid_time), 'Y-m-d в H:i');
-            }
-        }
+    if ($bid_time_hours === 1) {
+        return 'час назад';
     }
+    if ($bid_time_hours > 1 && $bid_time_hours < 12) {
+        return $bid_time_hours . ' ' . get_noun_plural_form($bid_time_hours, 'час назад', 'часа назад', 'часов назад');
+    }
+    return date_format(date_create($bid_time), 'Y-m-d в H:i');
 }
-
-?>

@@ -36,8 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (count($errors) === 0 && $user) {
         if (password_verify($_POST['password'], $user['password'])) {
             $_SESSION['user'] = $user;
-        }
-        else {
+        } else {
             $errors['password'] = 'Неверный пароль';
         }
     }
@@ -53,4 +52,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $layout = include_template('login_layout.php', ['categories' => $categories, 'errors' => $errors]);
 print($layout);
-?>

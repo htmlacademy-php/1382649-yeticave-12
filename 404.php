@@ -46,6 +46,7 @@ require_once('db_connection.php');
     if (!$categories_result) {
         $error = mysqli_error($db_connection);
         print("Ошибка MySQL: " . $error);
+        die();
     }
     $categories = [];
     while ($category = mysqli_fetch_array($categories_result, MYSQLI_ASSOC)) {
