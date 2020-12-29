@@ -8,24 +8,19 @@
             $symbol = '';
             if ($item === 'Доски и лыжи') {
                 $symbol = "boards";
-            }
-            else {
+            } else {
                 if ($item === 'Крепления') {
                     $symbol = "attachment";
-                }
-                else {
+                } else {
                     if ($item === 'Ботинки') {
                         $symbol = "boots";
-                    }
-                    else {
+                    } else {
                         if ($item === 'Одежда') {
                             $symbol = "clothing";
-                        }
-                        else {
+                        } else {
                             if ($item === 'Инструменты') {
                                 $symbol = "tools";
-                            }
-                            else {
+                            } else {
                                 if ($item === 'Разное') {
                                     $symbol = "other";
                                 }
@@ -33,8 +28,7 @@
                         }
                     }
                 }
-            }
-            ?>
+            } ?>
             <li class="promo__item promo__item--<?= $symbol ?>">
                 <a class="promo__link"
                    href="all-lots.php?category=<?= htmlspecialchars($item); ?>"><?= htmlspecialchars($item); ?></a>
@@ -71,18 +65,16 @@
                         </div>
 
                         <?php require_once('functions.php');
-                        $remaining_time = get_dt_range($announce['expiration_date']);
-                        if ($remaining_time[0] >= '1') {
-                            echo '<div class="lot__timer timer">';
-                            echo $remaining_time[0] . ':' . $remaining_time[1];
-                            echo '</div>';
-                        }
-                        else {
-                            echo '<div class="timer--finishing timer">';
-                            echo $remaining_time[0] . ':' . $remaining_time[1];
-                            echo '</div>';
-                        }
-                        ?>
+            $remaining_time = get_dt_range($announce['expiration_date']);
+            if ($remaining_time[0] >= '1') {
+                echo '<div class="lot__timer timer">';
+                echo $remaining_time[0] . ':' . $remaining_time[1];
+                echo '</div>';
+            } else {
+                echo '<div class="timer--finishing timer">';
+                echo $remaining_time[0] . ':' . $remaining_time[1];
+                echo '</div>';
+            } ?>
                     </div>
                 </div>
             </li>

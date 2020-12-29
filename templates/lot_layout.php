@@ -50,7 +50,8 @@
                     <li class="nav__item">
                         <a href="all-lots.php?category=<?= $category; ?>"><?= htmlspecialchars($category) ?></a>
                     </li>
-                <?php } ?>
+                <?php
+                } ?>
             </ul>
         </nav>
         <section class="lot-item container">

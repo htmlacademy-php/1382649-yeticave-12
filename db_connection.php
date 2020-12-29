@@ -6,4 +6,3 @@ if ($db_connection === false) {
     print("Ошибка подключения: " . mysqli_connect_error());
     die();
 }
-?>

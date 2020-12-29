@@ -40,5 +40,4 @@ $content = include_template('layout.php', [
     'title' => 'Главная',
     'categories' => $categories
 ]);
-print ($content);
-?>
+print($content);

@@ -62,8 +62,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $errors = array_filter($errors);
 
-    $sql_selected_category = "SELECT id FROM category WHERE name ='" . mysqli_real_escape_string($db_connection,
-            $_POST['category']) . '\'';
+    $sql_selected_category = "SELECT id FROM category WHERE name ='" . mysqli_real_escape_string(
+        $db_connection,
+        $_POST['category']
+    ) . '\'';
     $selected_category_query = mysqli_query($db_connection, $sql_selected_category);
     $selected_category = mysqli_fetch_array($selected_category_query, MYSQLI_ASSOC);
     $category_id = $selected_category['id'];
@@ -110,4 +112,3 @@ $layout = include_template('add-lot.php', [
     'warning_about_errors' => $warning_about_errors
 ]);
 print $layout;
-?>

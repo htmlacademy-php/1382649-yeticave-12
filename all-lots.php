@@ -28,8 +28,10 @@ $array_of_pages = range(1, $number_of_pages);
 
 $sql_all_lots_from_category = "SELECT lot.name, lot.final_date, lot.id, lot.description, lot.init_price, category.name AS category_name,
 lot_img.image_url FROM lot JOIN category ON lot.category_id = category.id JOIN lot_img ON lot.id = lot_img.lot_id
-WHERE category.name = '" . mysqli_real_escape_string($db_connection,
-        $get_category) . "' AND lot . final_date > NOW() LIMIT " . $number_of_lots_by_page . " OFFSET " .
+WHERE category.name = '" . mysqli_real_escape_string(
+    $db_connection,
+    $get_category
+) . "' AND lot . final_date > NOW() LIMIT " . $number_of_lots_by_page . " OFFSET " .
     $offset . ";";
 $sql_all_lots_from_category_query = mysqli_query($db_connection, $sql_all_lots_from_category);
 $all_lots = mysqli_fetch_all($sql_all_lots_from_category_query, MYSQLI_ASSOC);
@@ -44,4 +46,3 @@ $layout = include_template('all-lots_layout.php', [
     'array_of_pages' => $array_of_pages
 ]);
 print($layout);
-?>

@@ -31,4 +31,3 @@ $content = include_template('my-bets_layout.php', [
     'user_bets' => $user_bets
 ]);
 print($content);
-?>

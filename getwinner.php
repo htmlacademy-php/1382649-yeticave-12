@@ -9,8 +9,10 @@ $transport->setPassword('774a73ead5dd48');
 
 $mailer = new Swift_Mailer($transport);
 
-$expired_lot_sql_query = mysqli_query($db_connection,
-    "SELECT id, name from lot WHERE final_date< NOW() AND closed = 0 LIMIT 1;");
+$expired_lot_sql_query = mysqli_query(
+    $db_connection,
+    "SELECT id, name from lot WHERE final_date< NOW() AND closed = 0 LIMIT 1;"
+);
 $expired_lot = mysqli_fetch_array($expired_lot_sql_query, MYSQLI_ASSOC);
 
 if ($expired_lot !== null) {
@@ -23,8 +25,10 @@ WHERE lot_id = " . mysqli_real_escape_string($db_connection, $expired_lot['id'])
 
     $winner = mysqli_fetch_array($winner_sql_query, MYSQLI_ASSOC);
 
-    $update_column_closed_sql_query = mysqli_query($db_connection,
-        "UPDATE lot SET closed = 1 WHERE id = " . $expired_lot['id']);
+    $update_column_closed_sql_query = mysqli_query(
+        $db_connection,
+        "UPDATE lot SET closed = 1 WHERE id = " . $expired_lot['id']
+    );
 
     $message = new Swift_Message();
     $message->setSubject("Ваша ставка победила");

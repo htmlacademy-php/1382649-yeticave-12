@@ -60,4 +60,3 @@ $layout = include_template('sign-up_layout.php', [
     'warning_about_errors' => $warning_about_errors
 ]);
 print($layout);
-?>
